@@ -151,3 +151,17 @@ export const projectList1 = [
     ]
   }
 ];
+
+export const projectTitle = "Restart Pracy – Start Rozwoju!";
+export const projectPeriod = "01.05.2026-31.09.2027";
+export const projectValue = "877 125,00 zł";
+export const euContribution = "745 556,25 zł";
+
+export const projectGoal =
+  "Celem głównym projektu jest zwiększenie możliwości zawodowych 100 osób powyżej 18 roku życia zamieszkujących w rozumieniu Kodeksu Cywilnego na obszarze województwa świętokrzyskiego, wpisujących się w definicję osób ubogich pracujących poprzez zaplanowane działania realizowane w ramach aktywizacji zawodowej oraz zwiększenie świadomości i kompetencji 15 pracodawców lub związków zawodowych posiadających jednostkę organizacyjną na obszarze województwa świętokrzyskiego na temat sposobów zapobiegania dyskryminacji i tworzenia przyjaznego środowiska pracy.";
+
+export const projectEffects = [
+  "poprawa sytuacji Uczestników/czek projektu na rynku pracy poprzez nabycie przez nich nowych kompetencji i kwalifikacji",
+  "poprawa sytuacji społecznej min. 70 Uczestników/czek projektu",
+  "wzrost świadomości społecznej, w tym pracodawców i związków zawodowych, w zakresie równości, niedyskryminacji, przyjaznego miejsca pracy, praw osób z niepełnosprawnościami oraz godności każdego człowieka",
+];

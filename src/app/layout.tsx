@@ -1,21 +1,16 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
-// Bootstrap and custom scss
 import "@/assets/scss/style.scss";
 import NavbarOne from "@/components/blocks/navbar/navbar-1/NavbarOne";
-import Toplogo from "@/components/blocks/navbar/top-logo/Toplogo";
 import Footer2 from "@/components/blocks/footer/Footer2";
-import Link from "next/link";
 import AccessibilityButton from "@/components/reuseable/AccessibilityButton";
-import PopupForm from "@/components/blocks/form/popupform";
-
-
+import { projectTitle } from "@/data/project";
 
 const manrope = Manrope({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Most Integracji - Podkarpackie Centrum Wsparcia OPT",
-  description: "Most Integracji - Podkarpackie Centrum Wsparcia OPT",
+  title: projectTitle,
+  description: projectTitle,
 };
 
 export default function RootLayout({
@@ -24,8 +19,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-
-
     <html lang="pl" data-bs-theme="light">
       <head>
         <link rel="apple-touch-icon" sizes="180x180" href="/ico/apple-touch-icon.png" />
@@ -37,15 +30,11 @@ export default function RootLayout({
         <meta name="theme-color" content="#ffffff" />
       </head>
       <body className={manrope.className}>
-
-        <NavbarOne
-        //  button={<PopupForm />} 
-        />
+        <NavbarOne />
         <AccessibilityButton />
         <div>{children}</div>
         <Footer2 />
       </body>
     </html>
-
   );
 }
