@@ -36,7 +36,7 @@ export async function getStrapiData(): Promise<StrapiResponse> {
       cache: "no-store",
       headers: {
         "Content-Type": "application/json",
-        ...(bearerToken ? { Authorization: `****** } : {}),
+        ...(bearerToken ? { Authorization: "Bearer " + bearerToken } : {}),
       },
     });
 

@@ -15,7 +15,7 @@ async function getStrapiData() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        ...(bearerToken ? { Authorization: `****** } : {}),
+        ...(bearerToken ? { Authorization: "Bearer " + bearerToken } : {}),
       },
     });
 

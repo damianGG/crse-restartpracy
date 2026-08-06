@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
 import "@/assets/scss/style.scss";
 import NavbarOne from "@/components/blocks/navbar/navbar-1/NavbarOne";
 import Footer2 from "@/components/blocks/footer/Footer2";
 import AccessibilityButton from "@/components/reuseable/AccessibilityButton";
 import { projectTitle } from "@/data/project";
-
-const manrope = Manrope({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: projectTitle,
@@ -29,7 +26,7 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
       </head>
-      <body className={manrope.className}>
+      <body>
         <NavbarOne />
         <AccessibilityButton />
         <div>{children}</div>

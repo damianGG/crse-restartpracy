@@ -22,7 +22,7 @@ async function getStrapiData(id: string) {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      ...(bearerToken ? { Authorization: `****** } : {}),
+      ...(bearerToken ? { Authorization: "Bearer " + bearerToken } : {}),
     },
   });
 
