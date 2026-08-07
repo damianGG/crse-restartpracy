@@ -42,37 +42,32 @@ export default function News() {
             </section>
 
             <div className="container mb-15 mt-15" >
-                <p className="mb-3 fw-bold lead fs-lg">Wartość projektu: 3 200 071,65 zł </p>
-                <p className="mb-3 fw-bold lead fs-lg mb-15 ">Wysokość wkładu Funduszy Europejskich: 2 720 060,90 zł</p>
+                <p className="mb-3 fw-bold lead fs-lg">Wartość projektu: 877&nbsp;125,00 zł</p>
+                <p className="mb-3 fw-bold lead fs-lg mb-15 ">Wysokość wkładu Funduszy Europejskich: 745 556,25 zł</p>
                 <div className=" mt-4 mb-15">
                     <p className="mb-3 fw-bold lead fs-lg">
-                        Centrum Rozwoju Społeczno-Ekonomicznego realizuje projekt „Most Integracji -
-                        Podkarpackie Centrum Wsparcia OPT”<br />
-                        Projekt współfinansowany z Europejskiego Funduszu Społecznego Plus (EFS+) w
-                        ramach programu Fundusze Europejskie dla Podkarpacia 2021-2027, Priorytet nr 7
-                        Kapitał ludzki gotowy do zmian, Działanie nr 7.17 Integracja społeczno-gospodarcza
-                        obywateli państw trzecich.<br />
-                        Celem głównym projektu jest wsparcie integracji społeczno-gospodarczej 300
-                        obywateli państw trzecich, w tym migrantów i uchodźców 210 kobiet i 90 mężczyzn w wieku 18 lat i
-                        więcej zamieszkujących w rozumieniu kodeku cywilnego na obszarze woj. podkarpackiego w
-                        okresie 1.06.2025-30.06.2027, a tym samym zwiększenie ich aktywności społecznej,
-                        zawodowej i edukacyjnej.              </p>
-                    <br />
-
-                    <br />
-
-                    <p className="mb-3 fw-bold lead fs-lg">
-                        Główne rezultaty, które zostaną osiągnięte dzięki realizacji projektu:<br />
-                        - 233 osoby uzyskują nowa kwalifikacje/kompetencje,<br />
-                        - 120 osób sytuacja społeczna ulegnie poprawie po opuszczeniu programu,<br />
-                        - 45 osób podejmie dodatkowe kształcenie lub szkolenie po opuszczeniu programu,<br />
-                        - 75 osób podejmie pracę zarobkową lub założy działalność na własny rachunek.
-                        <br />
-                        <br />
+                        Celem głównym projektu jest zwiększenie możliwości zawodowych 100 osób
+                        powyżej 18 roku życia zamieszkujących w rozumieniu Kodeksu Cywilnego na
+                        obszarze województwa świętokrzyskiego, wpisujących się w definicję osób ubogich
+                        pracujących poprzez zaplanowane działania realizowane w ramach aktywizacji
+                        zawodowej oraz zwiększenie świadomości i kompetencji 15 pracodawców/związków
+                        zawodowych posiadających jednostkę organizacyjną na obszarze województwa
+                        świętokrzyskiego na temat sposobów zapobiegania dyskryminacji i tworzenia
+                        przyjaznego środowiska pracy, co przyczyni się m.in. do poprawy pozycji
+                        Uczestników/czek projektu na rynku pracy.<br />
+                        Efektami udziału w projekcie będzie:
                     </p>
+                    <ul className="icon-list bullet-bg bullet-soft-primary mb-3">
+                        <li><i className="uil uil-check"></i>poprawa sytuacji Uczestników/czek projektu na rynku pracy poprzez nabycie
+                        przez nich nowych kompetencji/kwalifikacji,</li>
+                        <li className="mt-3"><i className="uil uil-check"></i>poprawa sytuacji społecznej min. 70 Uczestników/czek projektu,</li>
+                        <li className="mt-3"><i className="uil uil-check"></i>wzrost świadomości społecznej, w tym pracodawców i/lub związków
+                        zawodowych w zakresie równości, niedyskryminacji, przyjaznego miejsca
+                        pracy, praw osób z niepełnosprawnościami oraz godności każdego człowieka.</li>
+                    </ul>
 
-                    <p> Wartość projektu: 3 200 071,65 zł</p>
-                    <p> Wysokość wkładu Funduszy Europejskich: 2 720 060,90 zł</p>
+                    <p> Wartość projektu: 877&nbsp;125,00 zł</p>
+                    <p> Wysokość wkładu Funduszy Europejskich: 745 556,25 zł</p>
                 </div>
 
                 <div className="row gx-lg-8 gx-xl-12 gy-10 mb-14 mb-md-17 align-items-center">
