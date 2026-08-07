@@ -14,7 +14,7 @@ export default function About6() {
 
         <div className="col-lg-12">
 
-          <h2 className="display-4 mb-3 text-center mb-10">Zapraszamy do projektu <br></br>&bdquo;Most Integracji - Podkarpackie Centrum Wsparcia OPT &rdquo;</h2>
+          <h2 className="display-4 mb-3 text-center mb-10">Zapraszamy do projektu <br></br>&bdquo;Restart Pracy – Start Rozwoju!&rdquo;</h2>
           <div className="col-lg-12">
             <p className="lead fs-lg">
               Do udziału w projekcie kwalifikują się osoby:
@@ -80,7 +80,7 @@ export default function About6() {
               </ul>
             </div>
 
-            <p className="text-center fs-20 mt-15">Okres realizacji projektu: 01.06.2025 r. - 30.06.2027 r.</p>
+            <p className="text-center fs-20 mt-15">Okres realizacji: 01.05.2026-31.09.2027</p>
 
           </div>
 
