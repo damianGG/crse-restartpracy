@@ -1,7 +1,3 @@
-import Process7 from "@/components/blocks/process/Process7";
-import flagaUe from '@/assets/img/flaga-ue-tlo.png'
-import flagaUex from '../../../public/img/flaga-ue-tlo.png'
-
 export default function News() {
     return (
         <>
@@ -11,7 +7,6 @@ export default function News() {
                     position: 'relative',
                     backgroundPosition: 'right',
                     backgroundImage: "url('/img/flaga-ue-tlo.png')",
-                    // backgroundImage: flagaUex,
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat'
                 }}
@@ -36,12 +31,11 @@ export default function News() {
                             <h1 className="display-1 mb-3" style={{ color: 'white' }}>
                                 Rekrutacja
                             </h1>
-                            <p className="lead px-xxl-10" style={{ color: 'white' }}>Sprawdź jak wygląda proces rekrutacji</p>
+                            <p className="lead px-xxl-10" style={{ color: 'white' }}>Strona w budowie</p>
                         </div>
                     </div>
                 </div>
             </section>
-            <Process7 />
         </>
     );
 };

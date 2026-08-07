@@ -2,8 +2,6 @@
 import Link from "next/link";
 // CUSTOM UTILS
 import { slideInDownAnimate, zoomInAnimate } from "@/utils/animation";
-import Image from "next/image";
-import ContactForm from "../form/form";
 import PopupForm from "../form/popupform";
 
 // import DietetykPhoto from "lubelskie1.jpg";
@@ -24,13 +22,10 @@ export default function Hero4() {
               style={{ width: "85%", height: "90%", right: "-0.8rem", bottom: "-1.8rem" }}
             />
             <figure className="rounded">
-              <Image
-                src="/img/most_integracji.jpg"
-                width="400"
-                height="300"
-                // priority={true} 
-                // placeholder='blur' // "empty" | "blur"
+              <img
+                src="https://github.com/user-attachments/assets/7d18c0ff-7ed1-47d0-87ee-cb9cbb80b1a2"
                 alt="hero"
+                style={{ width: "100%", height: "auto" }}
               />
 
             </figure>
