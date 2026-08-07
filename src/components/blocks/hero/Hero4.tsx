@@ -25,7 +25,7 @@ export default function Hero4() {
             />
             <figure className="rounded">
               <Image
-                src="/img/most_integracji.jpg"
+                src="/img/warsztat.jpg"
                 width="400"
                 height="300"
                 // priority={true} 

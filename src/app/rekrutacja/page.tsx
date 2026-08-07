@@ -1,4 +1,3 @@
-import Process7 from "@/components/blocks/process/Process7";
 import flagaUe from '@/assets/img/flaga-ue-tlo.png'
 import flagaUex from '../../../public/img/flaga-ue-tlo.png'
 
@@ -41,7 +40,9 @@ export default function News() {
                     </div>
                 </div>
             </section>
-            <Process7 />
+            <div className="container text-center mt-15 mb-15">
+                <h2 className="display-4">Strona w budowie</h2>
+            </div>
         </>
     );
 };
