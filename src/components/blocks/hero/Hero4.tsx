@@ -40,7 +40,7 @@ export default function Hero4() {
 
           <div className="col-lg-5 mt-lg-n10 text-center text-lg-start">
             <h1 className="display-1 mb-5 fs-40" style={slideInDownAnimate("600ms")}>
-              „Restart Pracy – Start Rozwoju!"
+              &bdquo;Restart Pracy &ndash; Start Rozwoju!&rdquo;
             </h1>
             <div className="d-flex justify-content-center justify-content-lg-start">
 
