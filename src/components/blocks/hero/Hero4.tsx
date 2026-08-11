@@ -25,7 +25,7 @@ export default function Hero4() {
             />
             <figure className="rounded">
               <Image
-                src="https://github.com/user-attachments/assets/efc098f8-1883-494f-9489-8e633eb20587"
+                src="/img/most_integracji.jpg"
                 width="400"
                 height="300"
                 // priority={true} 
