@@ -4,7 +4,7 @@ export default function Toplogo() {
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <Image
-        src="/img/logos/podkarpackie.jpg"
+        src="/img/Poziomy_podstawowy_kolorowy.jpg"
         alt="logo"
         sizes="90vw"
         width={1200}
