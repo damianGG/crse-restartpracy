@@ -83,19 +83,22 @@ export const aktualnosci = pgTable('aktualnosci', {
 export const aktualnosciPliki = pgTable('aktualnosci_pliki', {
   id: serial('id').primaryKey(),
   userId: text('userId').notNull(),
-  aktualnoscId: integer('aktualnoscId').notNull(),
+  aktualnoscId: integer('aktualnoscId')
+    .notNull()
+    .references(() => aktualnosci.id, { onDelete: 'cascade' }),
   name: text('name').notNull(),
   url: text('url').notNull(),
   pathname: text('pathname').notNull(),
   createdAt: timestamp('createdAt').notNull().defaultNow(),
 });
 
-// Rekrutacja - single editable content block (title, description, etc.)
+// Rekrutacja - single editable content block
 export const rekrutacjaContent = pgTable('rekrutacja_content', {
   id: serial('id').primaryKey(),
-  userId: text('userId').notNull(),
-  title: text('title').notNull().default(''),
-  description: text('description').notNull().default(''),
+  userId: text('userId'),
+  title: text('title'),
+  intro: text('intro'),
+  content: text('content'),
   updatedAt: timestamp('updatedAt').notNull().defaultNow(),
 });
 
@@ -104,20 +107,22 @@ export const rekrutacjaPliki = pgTable('rekrutacja_pliki', {
   id: serial('id').primaryKey(),
   userId: text('userId').notNull(),
   name: text('name').notNull(),
+  description: text('description'),
   url: text('url').notNull(),
   pathname: text('pathname').notNull(),
-  order: integer('order').notNull().default(0),
+  position: integer('position').notNull().default(0),
   createdAt: timestamp('createdAt').notNull().defaultNow(),
 });
 
 // Homepage editable content (Hero + About sections)
 export const homepageContent = pgTable('homepage_content', {
   id: serial('id').primaryKey(),
-  userId: text('userId').notNull(),
-  heroTitle: text('heroTitle').notNull().default(''),
-  heroSubtitle: text('heroSubtitle').notNull().default(''),
+  userId: text('userId'),
+  heroTitle: text('heroTitle'),
+  heroSubtitle: text('heroSubtitle'),
   heroImageUrl: text('heroImageUrl'),
-  aboutTitle: text('aboutTitle').notNull().default(''),
-  aboutContent: text('aboutContent').notNull().default(''),
+  aboutTitle: text('aboutTitle'),
+  aboutContent: text('aboutContent'),
+  aboutImageUrl: text('aboutImageUrl'),
   updatedAt: timestamp('updatedAt').notNull().defaultNow(),
 });

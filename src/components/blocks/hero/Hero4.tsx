@@ -9,7 +9,13 @@ import PopupForm from "../form/popupform";
 // import DietetykPhoto from "lubelskie1.jpg";
 
 
-export default function Hero4() {
+export default function Hero4({
+  title = '\u201eRestart Pracy \u2013 Start Rozwoju!\u201d',
+  imageUrl = 'https://github.com/user-attachments/assets/3cea04b8-34bd-4e1b-b103-02fa562f0d7c',
+}: {
+  title?: string;
+  imageUrl?: string;
+}) {
 
   return (
     <section className="wrapper bg-light">
@@ -25,7 +31,7 @@ export default function Hero4() {
             />
             <figure className="rounded">
               <Image
-                src="https://github.com/user-attachments/assets/3cea04b8-34bd-4e1b-b103-02fa562f0d7c"
+                src={imageUrl}
                 width={1536}
                 height={1024}
                 alt="Warsztaty stolarskie na stronie głównej"
