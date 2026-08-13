@@ -25,12 +25,11 @@ export default function Hero4() {
             />
             <figure className="rounded">
               <Image
-                src="/img/photos/szkolenie-zawodowe.jpg"
-                width="400"
-                height="300"
-                // priority={true} 
-                // placeholder='blur' // "empty" | "blur"
-                alt="hero"
+                src="https://github.com/user-attachments/assets/3cea04b8-34bd-4e1b-b103-02fa562f0d7c"
+                width={1536}
+                height={1024}
+                alt="Warsztaty stolarskie na stronie głównej"
+                unoptimized
               />
 
             </figure>
