@@ -1,0 +1,154 @@
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import {
+  getAktualnoscById,
+  updateAktualnosc,
+  deleteAktualnosc,
+  addAktualnoscFile,
+  deleteAktualnoscFile,
+} from '@/lib/actions/aktualnosci';
+import SubmitButton from '@/components/admin/SubmitButton';
+import styles from '@/components/admin/admin.module.scss';
+
+export const metadata = {
+  title: 'Panel administracyjny - edycja aktualności',
+};
+
+export const dynamic = 'force-dynamic';
+
+export default async function EditAktualnoscPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const id = Number(params.id);
+  const article = await getAktualnoscById(id);
+
+  if (!article) {
+    notFound();
+  }
+
+  const updateWithId = updateAktualnosc.bind(null, id);
+  const deleteWithId = deleteAktualnosc.bind(null, id);
+  const addFileWithId = addAktualnoscFile.bind(null, id);
+
+  return (
+    <>
+      <Link href="/admin/aktualnosci" className={styles.backLink}>
+        ← Wróć do listy
+      </Link>
+
+      <div className={styles.pageHeader}>
+        <h1 className={styles.pageTitle}>Edytuj aktualność</h1>
+        <p className={styles.pageSubtitle}>{article.title}</p>
+      </div>
+
+      <form action={updateWithId} className={styles.card}>
+        <div className={styles.formGrid}>
+          <div className={styles.field}>
+            <label htmlFor="title">Tytuł</label>
+            <input id="title" name="title" type="text" defaultValue={article.title} required />
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="excerpt">Krótki opis (widoczny na liście)</label>
+            <input
+              id="excerpt"
+              name="excerpt"
+              type="text"
+              maxLength={200}
+              defaultValue={article.excerpt ?? ''}
+            />
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="content">Treść</label>
+            <textarea id="content" name="content" required rows={10} defaultValue={article.content} />
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="coverImage">Zdjęcie główne</label>
+            {article.coverImageUrl && (
+              <div className={styles.imagePreview}>
+                <img src={article.coverImageUrl} alt={article.title} />
+                <span className={styles.helpText}>Wgraj nowy plik, aby je zastąpić.</span>
+              </div>
+            )}
+            <input id="coverImage" name="coverImage" type="file" accept="image/*" />
+          </div>
+
+          <div className={styles.checkboxRow}>
+            <input
+              id="published"
+              name="published"
+              type="checkbox"
+              defaultChecked={article.published}
+            />
+            <label htmlFor="published">Opublikowane</label>
+          </div>
+
+          <div>
+            <SubmitButton pendingText="Zapisywanie...">Zapisz zmiany</SubmitButton>
+          </div>
+        </div>
+      </form>
+
+      <div className={styles.card}>
+        <div className={styles.cardHeader}>
+          <span className={styles.cardTitle}>Pliki do pobrania</span>
+        </div>
+
+        {article.files.length === 0 ? (
+          <p className={styles.emptyState}>Brak plików w tym wpisie.</p>
+        ) : (
+          <div className={styles.list}>
+            {article.files.map((file) => {
+              const deleteFile = deleteAktualnoscFile.bind(null, file.id, id);
+              return (
+                <div className={styles.listItem} key={file.id}>
+                  <div className={styles.listItemMain}>
+                    <div className={styles.listItemTitle}>{file.name}</div>
+                  </div>
+                  <div className={styles.listItemActions}>
+                    <a
+                      href={file.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={`${styles.btn} ${styles.btnOutline} ${styles.btnSm}`}
+                    >
+                      Pobierz
+                    </a>
+                    <form action={deleteFile}>
+                      <SubmitButton variant="danger" size="sm" pendingText="Usuwanie...">
+                        Usuń
+                      </SubmitButton>
+                    </form>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        <form action={addFileWithId} className={styles.formRow} style={{ marginTop: '1.25rem' }}>
+          <input name="file" type="file" required />
+          <SubmitButton pendingText="Wgrywanie...">Dodaj plik</SubmitButton>
+        </form>
+      </div>
+
+      <div className={styles.card}>
+        <div className={styles.cardHeader}>
+          <span className={styles.cardTitle}>Usuń aktualność</span>
+        </div>
+        <p className={styles.helpText} style={{ marginBottom: '1rem' }}>
+          Tej operacji nie można odwrócić. Wpis i jego pliki zostaną usunięte na stałe.
+        </p>
+        <form action={deleteWithId}>
+          <SubmitButton variant="danger" pendingText="Usuwanie...">
+            Usuń aktualność
+          </SubmitButton>
+        </form>
+      </div>
+    </>
+  );
+}

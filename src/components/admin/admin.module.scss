@@ -1,0 +1,481 @@
+$admin-primary: #0096ca;
+$admin-primary-dark: #00749c;
+$admin-ink: #14232e;
+$admin-muted: #5c6b76;
+$admin-border: #dfe6ea;
+$admin-bg: #f4f7f9;
+$admin-danger: #c0392b;
+$admin-danger-bg: #fbeae8;
+$admin-success-bg: #e7f5ec;
+$admin-success: #1f7a4d;
+
+/* ---------- Auth ---------- */
+
+.authWrapper {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  background: $admin-bg;
+}
+
+.authCard {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border: 1px solid $admin-border;
+  border-radius: 14px;
+  padding: 2.5rem;
+  box-shadow: 0 12px 30px -18px rgba(20, 35, 46, 0.25);
+}
+
+.authKicker {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $admin-primary;
+  margin-bottom: 0.5rem;
+}
+
+.authTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: $admin-ink;
+  margin-bottom: 0.5rem;
+}
+
+.authSubtitle {
+  font-size: 0.9rem;
+  color: $admin-muted;
+  margin-bottom: 1.75rem;
+  line-height: 1.5;
+}
+
+.authForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: $admin-ink;
+  }
+
+  input,
+  textarea {
+    border: 1px solid $admin-border;
+    border-radius: 8px;
+    padding: 0.65rem 0.8rem;
+    font-size: 0.95rem;
+    color: $admin-ink;
+    background: #fff;
+    font-family: inherit;
+
+    &:focus {
+      outline: none;
+      border-color: $admin-primary;
+      box-shadow: 0 0 0 3px rgba($admin-primary, 0.15);
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+}
+
+.authError {
+  font-size: 0.85rem;
+  color: $admin-danger;
+  background: $admin-danger-bg;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+}
+
+.authSubmit {
+  margin-top: 0.25rem;
+  background: $admin-primary;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: $admin-primary-dark;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+/* ---------- Dashboard shell ---------- */
+
+.shell {
+  min-height: 70vh;
+  background: $admin-bg;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: #fff;
+  border-bottom: 1px solid $admin-border;
+  flex-wrap: wrap;
+}
+
+.topbarBrand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 700;
+  color: $admin-ink;
+}
+
+.topbarBadge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $admin-primary;
+  background: rgba($admin-primary, 0.1);
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+}
+
+.topbarActions {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-size: 0.85rem;
+  color: $admin-muted;
+}
+
+.signOutBtn {
+  background: transparent;
+  border: 1px solid $admin-border;
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: $admin-ink;
+  cursor: pointer;
+
+  &:hover {
+    border-color: $admin-primary;
+    color: $admin-primary;
+  }
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  gap: 0;
+}
+
+.nav {
+  width: 230px;
+  flex-shrink: 0;
+  background: #fff;
+  border-right: 1px solid $admin-border;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: $admin-muted;
+
+  &:hover {
+    background: $admin-bg;
+    color: $admin-ink;
+  }
+}
+
+.navLinkActive {
+  background: rgba($admin-primary, 0.1);
+  color: $admin-primary;
+
+  &:hover {
+    background: rgba($admin-primary, 0.14);
+    color: $admin-primary;
+  }
+}
+
+.main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 960px;
+}
+
+.pageHeader {
+  margin-bottom: 1.75rem;
+}
+
+.pageTitle {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: $admin-ink;
+  margin-bottom: 0.3rem;
+}
+
+.pageSubtitle {
+  font-size: 0.92rem;
+  color: $admin-muted;
+}
+
+/* ---------- Cards / tables / buttons (shared) ---------- */
+
+.card {
+  background: #fff;
+  border: 1px solid $admin-border;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.1rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.cardTitle {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: $admin-ink;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid $admin-border;
+  border-radius: 10px;
+  flex-wrap: wrap;
+}
+
+.listItemMain {
+  min-width: 0;
+}
+
+.listItemTitle {
+  font-weight: 600;
+  color: $admin-ink;
+  font-size: 0.95rem;
+}
+
+.listItemMeta {
+  font-size: 0.8rem;
+  color: $admin-muted;
+  margin-top: 0.15rem;
+}
+
+.listItemActions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+}
+
+.badgePublished {
+  background: $admin-success-bg;
+  color: $admin-success;
+}
+
+.badgeDraft {
+  background: $admin-bg;
+  color: $admin-muted;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border-radius: 999px;
+  padding: 0.55rem 1.2rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.btnPrimary {
+  background: $admin-primary;
+  color: #fff;
+
+  &:hover {
+    background: $admin-primary-dark;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.btnOutline {
+  background: #fff;
+  border-color: $admin-border;
+  color: $admin-ink;
+
+  &:hover {
+    border-color: $admin-primary;
+    color: $admin-primary;
+  }
+}
+
+.btnDanger {
+  background: #fff;
+  border-color: $admin-border;
+  color: $admin-danger;
+
+  &:hover {
+    border-color: $admin-danger;
+    background: $admin-danger-bg;
+  }
+}
+
+.btnSm {
+  padding: 0.4rem 0.85rem;
+  font-size: 0.78rem;
+}
+
+.emptyState {
+  text-align: center;
+  color: $admin-muted;
+  font-size: 0.9rem;
+  padding: 2rem 1rem;
+}
+
+.formGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.formRow {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  > * {
+    flex: 1;
+    min-width: 200px;
+  }
+}
+
+.helpText {
+  font-size: 0.78rem;
+  color: $admin-muted;
+}
+
+.imagePreview {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.imagePreview img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid $admin-border;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  input {
+    width: auto;
+  }
+
+  label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $admin-ink;
+  }
+}
+
+.toast {
+  font-size: 0.85rem;
+  border-radius: 8px;
+  padding: 0.65rem 0.9rem;
+}
+
+.toastSuccess {
+  background: $admin-success-bg;
+  color: $admin-success;
+}
+
+.toastError {
+  background: $admin-danger-bg;
+  color: $admin-danger;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: $admin-muted;
+  margin-bottom: 1rem;
+
+  &:hover {
+    color: $admin-primary;
+  }
+}

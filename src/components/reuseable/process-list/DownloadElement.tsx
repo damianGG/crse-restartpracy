@@ -1,8 +1,6 @@
 import clsx from "clsx";
 import Link from "next/link";
 
-const backendLink = process.env.STRAPI_PUBLIC_BACKEND_LINK;
-
 // ==============================================================
 interface DownloadListProps {
     title: string;
