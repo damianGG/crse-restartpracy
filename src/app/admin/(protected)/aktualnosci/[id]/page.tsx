@@ -8,6 +8,7 @@ import {
   deleteAktualnoscFile,
 } from '@/lib/actions/aktualnosci';
 import SubmitButton from '@/components/admin/SubmitButton';
+import RichTextEditor from '@/components/admin/RichTextEditor';
 import styles from '@/components/admin/admin.module.scss';
 
 export const metadata = {
@@ -63,7 +64,10 @@ export default async function EditAktualnoscPage({
 
           <div className={styles.field}>
             <label htmlFor="content">Treść</label>
-            <textarea id="content" name="content" required rows={10} defaultValue={article.content} />
+            <RichTextEditor name="content" defaultValue={article.content} />
+            <span className={styles.helpText}>
+              Użyj paska narzędzi, aby pogrubić tekst, dodać kursywę, nagłówki lub listy.
+            </span>
           </div>
 
           <div className={styles.field}>

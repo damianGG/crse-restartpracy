@@ -13,10 +13,70 @@
   flex-grow: 1;
 }
 
-.post-content p {
+/* Obcinanie do 4 linii dotyczy TYLKO podglądów na liście aktualności. */
+.news-card .post-content p {
   display: -webkit-box;
-  -webkit-line-clamp: 4; /* Ogranicz do 4 linii */
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* Pełna, sformatowana treść pojedynczego artykułu. */
+.richContent {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: inherit;
+}
+
+.richContent p {
+  margin-top: 0;
+  margin-bottom: 1.1rem;
+}
+
+.richContent h2 {
+  font-size: 1.6rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.richContent h3 {
+  font-size: 1.3rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.richContent ul,
+.richContent ol {
+  margin-bottom: 1.1rem;
+  padding-left: 1.5rem;
+}
+
+.richContent ul {
+  list-style: disc;
+}
+
+.richContent ol {
+  list-style: decimal;
+}
+
+.richContent li {
+  margin-bottom: 0.4rem;
+}
+
+.richContent blockquote {
+  border-left: 3px solid var(--bs-primary, #3f78e0);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: #666;
+}
+
+.richContent a {
+  color: var(--bs-primary, #3f78e0);
+  text-decoration: underline;
+}
+
+.richContent strong {
+  font-weight: 700;
 }
