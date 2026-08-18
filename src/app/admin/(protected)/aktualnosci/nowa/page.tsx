@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { format } from 'date-fns';
 import { createAktualnosc } from '@/lib/actions/aktualnosci';
 import SubmitButton from '@/components/admin/SubmitButton';
 import styles from '@/components/admin/admin.module.scss';
@@ -35,7 +36,13 @@ export default function NewAktualnoscPage() {
 
           <div className={styles.field}>
             <label htmlFor="publicationDate">Data publikacji</label>
-            <input id="publicationDate" name="publicationDate" type="date" required />
+            <input
+              id="publicationDate"
+              name="publicationDate"
+              type="date"
+              defaultValue={format(new Date(), 'yyyy-MM-dd')}
+              required
+            />
           </div>
 
           <div className={styles.field}>
