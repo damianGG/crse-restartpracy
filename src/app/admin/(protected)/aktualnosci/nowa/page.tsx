@@ -34,6 +34,11 @@ export default function NewAktualnoscPage() {
           </div>
 
           <div className={styles.field}>
+            <label htmlFor="publicationDate">Data publikacji</label>
+            <input id="publicationDate" name="publicationDate" type="date" required />
+          </div>
+
+          <div className={styles.field}>
             <label htmlFor="content">Treść</label>
             <textarea id="content" name="content" required rows={10} />
             <span className={styles.helpText}>
