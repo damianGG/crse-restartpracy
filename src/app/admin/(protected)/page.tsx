@@ -24,6 +24,18 @@ export default async function AdminHomePage() {
 
       <div className={styles.card}>
         <div className={styles.cardHeader}>
+          <span className={styles.cardTitle}>O projekcie</span>
+          <Link href="/admin/o-projekcie" className={`${styles.btn} ${styles.btnOutline} ${styles.btnSm}`}>
+            Zarządzaj
+          </Link>
+        </div>
+        <p className={styles.pageSubtitle}>
+          Edytuj opis projektu, efekty oraz formy wsparcia.
+        </p>
+      </div>
+
+      <div className={styles.card}>
+        <div className={styles.cardHeader}>
           <span className={styles.cardTitle}>Aktualności</span>
           <Link href="/admin/aktualnosci" className={`${styles.btn} ${styles.btnOutline} ${styles.btnSm}`}>
             Zarządzaj
