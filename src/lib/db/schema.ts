@@ -126,3 +126,16 @@ export const homepageContent = pgTable('homepage_content', {
   aboutImageUrl: text('aboutImageUrl'),
   updatedAt: timestamp('updatedAt').notNull().defaultNow(),
 });
+
+// O projekcie - editable page content
+export const aboutProjectContent = pgTable('about_project_content', {
+  id: serial('id').primaryKey(),
+  userId: text('userId'),
+  title: text('title'),
+  projectValue: text('projectValue'),
+  euFundingValue: text('euFundingValue'),
+  objective: text('objective'),
+  outcomes: text('outcomes'),
+  sections: text('sections'),
+  updatedAt: timestamp('updatedAt').notNull().defaultNow(),
+});
