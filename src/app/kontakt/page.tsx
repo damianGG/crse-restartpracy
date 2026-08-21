@@ -1,9 +1,14 @@
 import type { Metadata } from 'next'
+import { getContactContent } from '@/lib/actions/contact';
 export const metadata: Metadata = {
     title: 'Kontakt do projektu „Kobieta * Aktywność * Sukces',
     description: 'Kontakt do projektu „Kobieta * Aktywność * Sukces”',
 }
-export default function Kontakt() {
+export const dynamic = 'force-dynamic';
+
+export default async function Kontakt() {
+    const content = await getContactContent();
+
     return (
         <>
             <section
@@ -34,7 +39,7 @@ export default function Kontakt() {
                     <div className="row">
                         <div className="col-md-9 col-lg-7 col-xl-5 mx-auto">
                             <h1 className="display-1 mb-3" style={{ color: 'white' }}>
-                                Kontakt
+                                {content.title}
                             </h1>
                             <p className="lead px-xxl-10"></p>
                         </div>
@@ -47,8 +52,8 @@ export default function Kontakt() {
             <div className="container mt-5">
                 <div className="row">
                     <div className="col text-center">
-                        <h1>Biuro Projektu</h1>
-                        <p><strong>E-mail:</strong> <a href="mailto:restartpracy@crse.org.pl" className="link-primary" target="_blank">restartpracy@crse.org.pl</a> </p>
+                        <h1>{content.officeTitle}</h1>
+                        <p><strong>E-mail:</strong> <a href={`mailto:${content.email}`} className="link-primary">{content.email}</a> </p>
                     </div>
                 </div>
             </div>

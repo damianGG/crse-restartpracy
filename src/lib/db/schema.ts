@@ -139,3 +139,13 @@ export const aboutProjectContent = pgTable('about_project_content', {
   sections: text('sections'),
   updatedAt: timestamp('updatedAt').notNull().defaultNow(),
 });
+
+// Kontakt - editable page content
+export const contactContent = pgTable('contact_content', {
+  id: serial('id').primaryKey(),
+  userId: text('userId'),
+  title: text('title'),
+  officeTitle: text('officeTitle'),
+  email: text('email'),
+  updatedAt: timestamp('updatedAt').notNull().defaultNow(),
+});

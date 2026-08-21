@@ -434,6 +434,57 @@ $admin-success: #1f7a4d;
   border: 1px solid $admin-border;
 }
 
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.imageDropzone {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 120px;
+  padding: 0.8rem;
+  border: 2px dashed $admin-border;
+  border-radius: 8px;
+  color: $admin-muted;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+
+  &:hover {
+    border-color: $admin-primary;
+  }
+
+  strong,
+  small {
+    display: block;
+  }
+
+  small {
+    margin-top: 0.35rem;
+  }
+}
+
+.imageDropzoneDragging {
+  border-color: $admin-primary;
+  background: rgba($admin-primary, 0.08);
+}
+
+.imageDropzonePreview {
+  width: 120px;
+  height: 100px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
 .checkboxRow {
   display: flex;
   align-items: center;

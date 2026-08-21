@@ -1,4 +1,5 @@
 import { getAboutProjectContent, updateAboutProjectContent } from '@/lib/actions/about-project';
+import ImageDropzone from '@/components/admin/ImageDropzone';
 import SubmitButton from '@/components/admin/SubmitButton';
 import styles from '@/components/admin/admin.module.scss';
 
@@ -59,8 +60,12 @@ export default async function AdminOProjekciePage() {
                 <input id={`sectionTitle-${index}`} name={`sectionTitle-${index}`} type="text" defaultValue={section.title} />
               </div>
               <div className={styles.field}>
-                <label htmlFor={`sectionImageUrl-${index}`}>Adres zdjęcia</label>
-                <input id={`sectionImageUrl-${index}`} name={`sectionImageUrl-${index}`} type="text" defaultValue={section.imageUrl} />
+                <ImageDropzone
+                  id={`sectionImage-${index}`}
+                  name={`sectionImage-${index}`}
+                  currentImageUrl={section.imageUrl}
+                  label="Zdjęcie"
+                />
               </div>
               <div className={styles.field}>
                 <label htmlFor={`sectionBullets-${index}`}>Opis</label>

@@ -2,6 +2,7 @@
 
 import { eq } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
+import { del, put } from '@vercel/blob';
 import { db } from '@/lib/db';
 import { aboutProjectContent } from '@/lib/db/schema';
 import {
@@ -57,13 +58,37 @@ export async function getAboutProjectContent() {
 
 export async function updateAboutProjectContent(formData: FormData) {
   const userId = await getUserId();
-  const sections = DEFAULT_ABOUT_PROJECT_CONTENT.sections.map((section, index) => ({
-    title: String(formData.get(`sectionTitle-${index}`) ?? '').trim(),
-    imageUrl: String(formData.get(`sectionImageUrl-${index}`) ?? '').trim(),
-    bullets: String(formData.get(`sectionBullets-${index}`) ?? '')
+  const [existing] = await db.select().from(aboutProjectContent).limit(1);
+  const existingSections = parseSections(existing?.sections);
+  const sections = await Promise.all(DEFAULT_ABOUT_PROJECT_CONTENT.sections.map(async (section, index) => {
+    const imageFile = formData.get(`sectionImage-${index}`);
+    const currentImageUrl = existingSections[index]?.imageUrl ?? section.imageUrl;
+    let imageUrl = currentImageUrl;
+
+    if (imageFile instanceof File && imageFile.size > 0) {
+      if (!imageFile.type.startsWith('image/')) {
+        throw new Error('Można przesyłać wyłącznie pliki graficzne.');
+      }
+
+      const blob = await put(`o-projekcie/${imageFile.name}`, imageFile, {
+        access: 'public',
+        addRandomSuffix: true,
+      });
+      imageUrl = blob.url;
+
+      if (currentImageUrl.includes('blob.vercel-storage.com')) {
+        await del(currentImageUrl).catch(() => {});
+      }
+    }
+
+    return {
+      title: String(formData.get(`sectionTitle-${index}`) ?? '').trim(),
+      imageUrl,
+      bullets: String(formData.get(`sectionBullets-${index}`) ?? '')
       .split('\n')
       .map((bullet) => bullet.trim())
       .filter(Boolean),
+    };
   }));
   const values = {
     title: String(formData.get('title') ?? '').trim(),
@@ -75,8 +100,6 @@ export async function updateAboutProjectContent(formData: FormData) {
     userId,
     updatedAt: new Date(),
   };
-  const [existing] = await db.select().from(aboutProjectContent).limit(1);
-
   if (existing) {
     await db.update(aboutProjectContent).set(values).where(eq(aboutProjectContent.id, existing.id));
   } else {

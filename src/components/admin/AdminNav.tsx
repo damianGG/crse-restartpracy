@@ -9,6 +9,7 @@ const links = [
   { href: '/admin/aktualnosci', label: 'Aktualności' },
   { href: '/admin/rekrutacja', label: 'Rekrutacja' },
   { href: '/admin/o-projekcie', label: 'O projekcie' },
+  { href: '/admin/kontakt', label: 'Kontakt' },
   { href: '/admin/strona-glowna', label: 'Strona główna' },
 ];
 
