@@ -6,24 +6,22 @@ import styles from './admin.module.scss';
 type ImageDropzoneProps = {
   id: string;
   name: string;
-  currentImageUrl: string;
   label: string;
 };
 
 export default function ImageDropzone({
   id,
   name,
-  currentImageUrl,
   label,
 }: ImageDropzoneProps) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [previewUrl, setPreviewUrl] = useState(currentImageUrl);
+  const [hasSelectedFile, setHasSelectedFile] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
 
   function selectFile(file: File | undefined) {
     if (!file || !file.type.startsWith('image/')) return;
 
-    setPreviewUrl(URL.createObjectURL(file));
+    setHasSelectedFile(true);
   }
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -64,12 +62,8 @@ export default function ImageDropzone({
         onDragLeave={() => setIsDragging(false)}
         onDrop={handleDrop}
       >
-        {previewUrl && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={previewUrl} alt="" className={styles.imageDropzonePreview} />
-        )}
         <span>
-          Przeciągnij i upuść zdjęcie tutaj lub <strong>wybierz plik</strong>
+          {hasSelectedFile ? 'Wybrano nowe zdjęcie.' : <>Przeciągnij i upuść zdjęcie tutaj lub <strong>wybierz plik</strong></>}
         </span>
       </label>
       <span className={styles.helpText}>

@@ -63,7 +63,6 @@ export default async function AdminOProjekciePage() {
                 <ImageDropzone
                   id={`sectionImage-${index}`}
                   name={`sectionImage-${index}`}
-                  currentImageUrl={section.imageUrl}
                   label="Zdjęcie"
                 />
               </div>
