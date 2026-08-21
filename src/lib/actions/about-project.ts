@@ -35,7 +35,13 @@ function parseSections(value: string | null | undefined): AboutProjectSection[] 
 }
 
 export async function getAboutProjectContent() {
-  const [content] = await db.select().from(aboutProjectContent).limit(1);
+  let content;
+
+  try {
+    [content] = await db.select().from(aboutProjectContent).limit(1);
+  } catch {
+    return DEFAULT_ABOUT_PROJECT_CONTENT;
+  }
 
   return {
     title: content?.title || DEFAULT_ABOUT_PROJECT_CONTENT.title,
