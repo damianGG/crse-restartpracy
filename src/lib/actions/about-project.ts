@@ -35,6 +35,15 @@ function parseSections(value: string | null | undefined): AboutProjectSection[] 
   return DEFAULT_ABOUT_PROJECT_CONTENT.sections;
 }
 
+function isVercelBlobUrl(value: string) {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' && url.hostname.endsWith('.blob.vercel-storage.com');
+  } catch {
+    return false;
+  }
+}
+
 export async function getAboutProjectContent() {
   let content;
 
@@ -76,7 +85,7 @@ export async function updateAboutProjectContent(formData: FormData) {
       });
       imageUrl = blob.url;
 
-      if (currentImageUrl.includes('blob.vercel-storage.com')) {
+      if (isVercelBlobUrl(currentImageUrl)) {
         await del(currentImageUrl).catch(() => {});
       }
     }

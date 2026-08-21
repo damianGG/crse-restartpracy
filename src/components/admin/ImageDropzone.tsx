@@ -18,13 +18,11 @@ export default function ImageDropzone({
 }: ImageDropzoneProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [previewUrl, setPreviewUrl] = useState(currentImageUrl);
-  const [fileName, setFileName] = useState('');
   const [isDragging, setIsDragging] = useState(false);
 
   function selectFile(file: File | undefined) {
     if (!file || !file.type.startsWith('image/')) return;
 
-    setFileName(file.name);
     setPreviewUrl(URL.createObjectURL(file));
   }
 
@@ -72,7 +70,6 @@ export default function ImageDropzone({
         )}
         <span>
           Przeciągnij i upuść zdjęcie tutaj lub <strong>wybierz plik</strong>
-          {fileName && <small>{fileName}</small>}
         </span>
       </label>
       <span className={styles.helpText}>
