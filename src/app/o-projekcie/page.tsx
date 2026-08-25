@@ -126,6 +126,7 @@ export default async function OProjekcie() {
                                                     width={600}
                                                     height={1000}
                                                     alt={blok.title}
+                                                    unoptimized
                                                 />
                                             </figure>
                                         </div>
