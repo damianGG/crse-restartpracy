@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { format } from 'date-fns';
 import {
   getAktualnoscById,
   updateAktualnosc,
@@ -59,6 +60,17 @@ export default async function EditAktualnoscPage({
               type="text"
               maxLength={200}
               defaultValue={article.excerpt ?? ''}
+            />
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="publicationDate">Data publikacji</label>
+            <input
+              id="publicationDate"
+              name="publicationDate"
+              type="date"
+              defaultValue={format(article.createdAt, 'yyyy-MM-dd')}
+              required
             />
           </div>
 

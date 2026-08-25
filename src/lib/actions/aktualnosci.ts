@@ -75,6 +75,29 @@ async function ensureUniqueSlug(baseSlug: string, excludeId?: number) {
   }
 }
 
+function parsePublicationDate(value: FormDataEntryValue | null) {
+  const date = String(value ?? '');
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date);
+
+  if (!match) {
+    throw new Error('Data publikacji jest wymagana.');
+  }
+
+  const publicationDate = new Date(
+    Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]), 12)
+  );
+
+  if (
+    publicationDate.getUTCFullYear() !== Number(match[1]) ||
+    publicationDate.getUTCMonth() !== Number(match[2]) - 1 ||
+    publicationDate.getUTCDate() !== Number(match[3])
+  ) {
+    throw new Error('Podaj poprawną datę publikacji.');
+  }
+
+  return publicationDate;
+}
+
 export async function createAktualnosc(formData: FormData) {
   const userId = await getUserId();
 
@@ -82,6 +105,7 @@ export async function createAktualnosc(formData: FormData) {
   const excerpt = String(formData.get('excerpt') ?? '').trim();
   const content = String(formData.get('content') ?? '').trim();
   const published = formData.get('published') === 'on';
+  const publicationDate = parsePublicationDate(formData.get('publicationDate'));
   const coverFile = formData.get('coverImage') as File | null;
 
   if (!title || !content) {
@@ -109,6 +133,7 @@ export async function createAktualnosc(formData: FormData) {
       content,
       coverImageUrl,
       published,
+      createdAt: publicationDate,
     })
     .returning({ id: aktualnosci.id });
 
@@ -124,6 +149,7 @@ export async function updateAktualnosc(id: number, formData: FormData) {
   const excerpt = String(formData.get('excerpt') ?? '').trim();
   const content = String(formData.get('content') ?? '').trim();
   const published = formData.get('published') === 'on';
+  const publicationDate = parsePublicationDate(formData.get('publicationDate'));
   const coverFile = formData.get('coverImage') as File | null;
 
   if (!title || !content) {
@@ -166,6 +192,7 @@ export async function updateAktualnosc(id: number, formData: FormData) {
       content,
       coverImageUrl,
       published,
+      createdAt: publicationDate,
       updatedAt: new Date(),
     })
     .where(eq(aktualnosci.id, id));
