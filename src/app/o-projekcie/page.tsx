@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { getOProjekcieContent, getOProjekcieBloki } from '@/lib/actions/o-projekcie';
 import ProjectRichContent from './ProjectRichContent';
 import './style.css';
@@ -121,12 +120,12 @@ export default async function OProjekcie() {
                                         isSupportedImageUrl(blok.imageUrl) && (
                                         <div>
                                             <figure className="rounded shadow">
-                                                <Image
+                                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                <img
                                                     src={blok.imageUrl}
                                                     width={600}
                                                     height={1000}
                                                     alt={blok.title}
-                                                    unoptimized
                                                 />
                                             </figure>
                                         </div>
