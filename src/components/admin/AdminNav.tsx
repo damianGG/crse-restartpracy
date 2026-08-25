@@ -9,6 +9,7 @@ const links = [
   { href: '/admin/aktualnosci', label: 'Aktualności' },
   { href: '/admin/rekrutacja', label: 'Rekrutacja' },
   { href: '/admin/strona-glowna', label: 'Strona główna' },
+  { href: '/admin/o-projekcie', label: 'O projekcie' },
 ];
 
 export default function AdminNav() {

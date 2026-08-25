@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { db } from '@/lib/db';
-import { aktualnosci, rekrutacjaPliki } from '@/lib/db/schema';
+import { aktualnosci, rekrutacjaPliki, oProjekcieBloki } from '@/lib/db/schema';
 import styles from '@/components/admin/admin.module.scss';
 
 export const metadata = {
@@ -8,9 +8,10 @@ export const metadata = {
 };
 
 export default async function AdminHomePage() {
-  const [newsCount, filesCount] = await Promise.all([
+  const [newsCount, filesCount, blokiCount] = await Promise.all([
     db.$count(aktualnosci),
     db.$count(rekrutacjaPliki),
+    db.$count(oProjekcieBloki),
   ]);
 
   return (
@@ -55,6 +56,18 @@ export default async function AdminHomePage() {
         </div>
         <p className={styles.pageSubtitle}>
           Edytuj sekcję hero i opis projektu na stronie głównej.
+        </p>
+      </div>
+
+      <div className={styles.card}>
+        <div className={styles.cardHeader}>
+          <span className={styles.cardTitle}>O projekcie</span>
+          <Link href="/admin/o-projekcie" className={`${styles.btn} ${styles.btnOutline} ${styles.btnSm}`}>
+            Zarządzaj
+          </Link>
+        </div>
+        <p className={styles.pageSubtitle}>
+          Form wsparcia na stronie: <strong>{blokiCount}</strong>
         </p>
       </div>
     </>
