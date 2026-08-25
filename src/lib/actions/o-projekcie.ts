@@ -34,8 +34,12 @@ async function removeBlobImage(url: string | null) {
 /* ------------------------------- Intro ------------------------------- */
 
 export async function getOProjekcieContent() {
-  const [content] = await db.select().from(oProjekcieContent).limit(1);
-  return content ?? null;
+  try {
+    const [content] = await db.select().from(oProjekcieContent).limit(1);
+    return content ?? null;
+  } catch {
+    return null;
+  }
 }
 
 export async function updateOProjekcieContent(formData: FormData) {
@@ -65,7 +69,11 @@ export async function updateOProjekcieContent(formData: FormData) {
 /* ------------------------------- Blocks ------------------------------ */
 
 export async function getOProjekcieBloki() {
-  return db.select().from(oProjekcieBloki).orderBy(asc(oProjekcieBloki.position));
+  try {
+    return await db.select().from(oProjekcieBloki).orderBy(asc(oProjekcieBloki.position));
+  } catch {
+    return [];
+  }
 }
 
 export async function getOProjekcieBlok(id: number) {
