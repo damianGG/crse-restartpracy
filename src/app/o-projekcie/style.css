@@ -1,0 +1,30 @@
+/* Treść strony "O projekcie" edytowana z panelu administracyjnego. */
+.projectRichContent p {
+  margin-top: 0;
+  margin-bottom: 1.1rem;
+}
+
+.projectRichContent ul,
+.projectRichContent ol {
+  margin-bottom: 1.1rem;
+}
+
+.projectRichContent li + li {
+  margin-top: 0.75rem;
+}
+
+.projectRichContent h2,
+.projectRichContent h3,
+.projectRichContent h4 {
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.projectRichContent a {
+  color: var(--bs-primary, #3f78e0);
+  text-decoration: underline;
+}
+
+.projectRichContent strong {
+  font-weight: 700;
+}

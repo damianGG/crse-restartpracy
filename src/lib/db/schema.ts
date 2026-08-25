@@ -114,6 +114,29 @@ export const rekrutacjaPliki = pgTable('rekrutacja_pliki', {
   createdAt: timestamp('createdAt').notNull().defaultNow(),
 });
 
+// O projekcie - intro section (single editable row)
+export const oProjekcieContent = pgTable('o_projekcie_content', {
+  id: serial('id').primaryKey(),
+  userId: text('userId'),
+  heroTitle: text('heroTitle'),
+  projectValue: text('projectValue'),
+  euContribution: text('euContribution'),
+  intro: text('intro'),
+  updatedAt: timestamp('updatedAt').notNull().defaultNow(),
+});
+
+// O projekcie - support blocks (image + title + bullet list)
+export const oProjekcieBloki = pgTable('o_projekcie_bloki', {
+  id: serial('id').primaryKey(),
+  userId: text('userId').notNull(),
+  title: text('title').notNull(),
+  content: text('content').notNull(),
+  imageUrl: text('imageUrl'),
+  position: integer('position').notNull().default(0),
+  createdAt: timestamp('createdAt').notNull().defaultNow(),
+  updatedAt: timestamp('updatedAt').notNull().defaultNow(),
+});
+
 // Homepage editable content (Hero + About sections)
 export const homepageContent = pgTable('homepage_content', {
   id: serial('id').primaryKey(),

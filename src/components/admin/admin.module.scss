@@ -479,3 +479,119 @@ $admin-success: #1f7a4d;
     color: $admin-primary;
   }
 }
+
+/* ---------- Rich text editor ---------- */
+
+.richEditor {
+  border: 1px solid $admin-border;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.rteToolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid $admin-border;
+  background: $admin-bg;
+}
+
+.rteButton {
+  min-width: 36px;
+  height: 34px;
+  padding: 0 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  color: $admin-ink;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+
+  &:hover {
+    background: #fff;
+    border-color: $admin-border;
+  }
+}
+
+.rteButtonActive {
+  background: $admin-primary;
+  border-color: $admin-primary;
+  color: #fff;
+
+  &:hover {
+    background: $admin-primary-dark;
+    border-color: $admin-primary-dark;
+    color: #fff;
+  }
+}
+
+.rteDivider {
+  width: 1px;
+  align-self: stretch;
+  margin: 0.15rem 0.25rem;
+  background: $admin-border;
+}
+
+.richEditorContent {
+  min-height: 260px;
+  max-height: 520px;
+  overflow-y: auto;
+  padding: 1rem 1.1rem;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: $admin-ink;
+  outline: none;
+
+  p {
+    margin: 0 0 0.85rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+    margin: 1.4rem 0 0.75rem;
+  }
+
+  h3 {
+    font-size: 1.15rem;
+    margin: 1.1rem 0 0.6rem;
+  }
+
+  ul,
+  ol {
+    margin: 0 0 0.85rem;
+    padding-left: 1.4rem;
+  }
+
+  ul {
+    list-style: disc;
+  }
+
+  ol {
+    list-style: decimal;
+  }
+
+  li {
+    margin-bottom: 0.3rem;
+  }
+
+  blockquote {
+    border-left: 3px solid $admin-primary;
+    padding-left: 0.9rem;
+    margin: 1rem 0;
+    color: $admin-muted;
+    font-style: italic;
+  }
+
+  &:empty::before {
+    content: 'Zacznij pisać treść wpisu...';
+    color: $admin-muted;
+    pointer-events: none;
+  }
+}

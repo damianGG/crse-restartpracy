@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { format } from 'date-fns';
 import { createAktualnosc } from '@/lib/actions/aktualnosci';
 import SubmitButton from '@/components/admin/SubmitButton';
+import RichTextEditor from '@/components/admin/RichTextEditor';
 import styles from '@/components/admin/admin.module.scss';
 
 export const metadata = {
@@ -47,9 +48,9 @@ export default function NewAktualnoscPage() {
 
           <div className={styles.field}>
             <label htmlFor="content">Treść</label>
-            <textarea id="content" name="content" required rows={10} />
+            <RichTextEditor name="content" />
             <span className={styles.helpText}>
-              Nową linię odstępu użyj, aby rozdzielić akapity.
+              Użyj paska narzędzi, aby pogrubić tekst, dodać kursywę, nagłówki lub listy.
             </span>
           </div>
 
