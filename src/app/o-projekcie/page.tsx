@@ -11,6 +11,28 @@ export const metadata = {
 
 export const dynamic = 'force-dynamic';
 
+function isSupportedImageUrl(value: string | null) {
+    if (!value) return false;
+
+    if (value.startsWith('/') && !value.startsWith('//')) return true;
+
+    try {
+        const { protocol, hostname, port } = new URL(value);
+
+        return (
+            (protocol === 'http:' && hostname === 'localhost' && port === '1337') ||
+            (protocol === 'https:' &&
+                (hostname === 'aktywnekobiety.pl' ||
+                    hostname === 'jpmcg.up.railway.app' ||
+                    hostname === 'res.cloudinary.com' ||
+                    hostname === 'github.com' ||
+                    hostname.endsWith('.public.blob.vercel-storage.com')))
+        );
+    } catch {
+        return false;
+    }
+}
+
 export default async function OProjekcie() {
     const [content, bloki] = await Promise.all([
         getOProjekcieContent(),
@@ -95,7 +117,8 @@ export default async function OProjekcie() {
                             >
                                 <div className="overlap-grid overlap-grid-2">
                                     {imageRight && shape}
-                                    {blok.imageUrl && (
+                                    {typeof blok.imageUrl === 'string' &&
+                                        isSupportedImageUrl(blok.imageUrl) && (
                                         <div>
                                             <figure className="rounded shadow">
                                                 <Image
