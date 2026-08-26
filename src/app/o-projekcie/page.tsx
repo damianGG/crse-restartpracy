@@ -1,4 +1,4 @@
-import { getOProjekcieContent } from '@/lib/actions/o-projekcie';
+import { getOProjekcieBloki, getOProjekcieContent } from '@/lib/actions/o-projekcie';
 import ProjectRichContent from './ProjectRichContent';
 import './style.css';
 
@@ -10,8 +10,31 @@ export const metadata = {
 
 export const dynamic = 'force-dynamic';
 
+function isSupportedImageUrl(value: string | null) {
+    if (!value) return false;
+    if (value.startsWith('/') && !value.startsWith('//')) return true;
+
+    try {
+        const { protocol, hostname, port } = new URL(value);
+        return (
+            (protocol === 'http:' && hostname === 'localhost' && port === '1337') ||
+            (protocol === 'https:' &&
+                (hostname === 'aktywnekobiety.pl' ||
+                    hostname === 'jpmcg.up.railway.app' ||
+                    hostname === 'res.cloudinary.com' ||
+                    hostname === 'github.com' ||
+                    hostname.endsWith('.public.blob.vercel-storage.com')))
+        );
+    } catch {
+        return false;
+    }
+}
+
 export default async function OProjekcie() {
-    const content = await getOProjekcieContent();
+    const [content, bloki] = await Promise.all([
+        getOProjekcieContent(),
+        getOProjekcieBloki(),
+    ]);
     const heroTitle = content?.heroTitle?.trim() || 'O projekcie';
     const projectValue = content?.projectValue?.trim();
     const euContribution = content?.euContribution?.trim();
@@ -66,6 +89,38 @@ export default async function OProjekcie() {
                         <ProjectRichContent content={intro} />
                     </div>
                 )}
+                {bloki.map((blok, index) => {
+                    const imageRight = index % 2 === 0;
+
+                    return (
+                        <div
+                            key={blok.id}
+                            className="row gx-lg-8 gx-xl-12 gy-10 mb-14 mb-md-17 align-items-center"
+                        >
+                            <div
+                                className={`col-lg-6 position-relative${
+                                    imageRight ? ' order-lg-1' : ''
+                                }`}
+                            >
+                                {isSupportedImageUrl(blok.imageUrl) && (
+                                    <figure className="rounded shadow">
+                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                        <img
+                                            src={blok.imageUrl!}
+                                            width={600}
+                                            height={1000}
+                                            alt={blok.title}
+                                        />
+                                    </figure>
+                                )}
+                            </div>
+                            <div className="col-lg-6">
+                                <p className="lead fs-lg">{blok.title}</p>
+                                <ProjectRichContent content={blok.content} />
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
         </>
     );
