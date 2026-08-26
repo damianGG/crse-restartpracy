@@ -1,3 +1,4 @@
+import { getOProjekcieContent } from '@/lib/actions/o-projekcie';
 import './style.css';
 
 export const metadata = {
@@ -6,7 +7,12 @@ export const metadata = {
         'Cele, wartość i formy wsparcia dostępne w ramach projektu — doradztwo zawodowe, poradnictwo psychologiczne, szkolenia i kursy zawodowe.',
 };
 
-export default function OProjekcie() {
+export const dynamic = 'force-dynamic';
+
+export default async function OProjekcie() {
+    const content = await getOProjekcieContent();
+    const heroTitle = content?.heroTitle?.trim() || 'O projekcie';
+
     return (
         <>
             <section
@@ -35,7 +41,7 @@ export default function OProjekcie() {
                     style={{ position: 'relative', zIndex: 1 }}
                 >
                     <h1 className="display-1 mb-3" style={{ color: 'white' }}>
-                        O projekcie
+                        {heroTitle}
                     </h1>
                 </div>
             </section>
