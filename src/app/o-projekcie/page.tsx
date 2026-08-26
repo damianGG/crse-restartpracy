@@ -1,5 +1,4 @@
-import Image from 'next/image';
-import { getOProjekcieContent, getOProjekcieBloki } from '@/lib/actions/o-projekcie';
+import { getOProjekcieBloki, getOProjekcieContent } from '@/lib/actions/o-projekcie';
 import ProjectRichContent from './ProjectRichContent';
 import './style.css';
 
@@ -11,13 +10,35 @@ export const metadata = {
 
 export const dynamic = 'force-dynamic';
 
+function isSupportedImageUrl(value: string | null) {
+    if (!value) return false;
+    if (value.startsWith('/') && !value.startsWith('//')) return true;
+
+    try {
+        const { protocol, hostname, port } = new URL(value);
+        return (
+            (protocol === 'http:' && hostname === 'localhost' && port === '1337') ||
+            (protocol === 'https:' &&
+                (hostname === 'aktywnekobiety.pl' ||
+                    hostname === 'jpmcg.up.railway.app' ||
+                    hostname === 'res.cloudinary.com' ||
+                    hostname === 'github.com' ||
+                    hostname.endsWith('.public.blob.vercel-storage.com')))
+        );
+    } catch {
+        return false;
+    }
+}
+
 export default async function OProjekcie() {
     const [content, bloki] = await Promise.all([
         getOProjekcieContent(),
         getOProjekcieBloki(),
     ]);
-
     const heroTitle = content?.heroTitle?.trim() || 'O projekcie';
+    const projectValue = content?.projectValue?.trim();
+    const euContribution = content?.euContribution?.trim();
+    const intro = content?.intro?.trim();
 
     return (
         <>
@@ -46,42 +67,30 @@ export default async function OProjekcie() {
                     className="container pt-5 pb-5 pt-md-10 pb-md-10 text-center"
                     style={{ position: 'relative', zIndex: 1 }}
                 >
-                    <div className="row">
-                        <div className="col-md-9 col-lg-7 col-xl-5 mx-auto">
-                            <h1 className="display-1 mb-3" style={{ color: 'white' }}>
-                                {heroTitle}
-                            </h1>
-                        </div>
-                    </div>
+                    <h1 className="display-1 mb-3" style={{ color: 'white' }}>
+                        {heroTitle}
+                    </h1>
                 </div>
             </section>
 
             <div className="container mb-15 mt-15">
-                {content?.projectValue?.trim() && (
+                {projectValue && (
                     <p className="mb-3 fw-bold lead fs-lg">
-                        Wartość projektu: {content.projectValue}
+                        Wartość projektu: {projectValue}
                     </p>
                 )}
-                {content?.euContribution?.trim() && (
+                {euContribution && (
                     <p className="mb-3 fw-bold lead fs-lg">
-                        Wysokość wkładu Funduszy Europejskich: {content.euContribution}
+                        Wysokość wkładu Funduszy Europejskich: {euContribution}
                     </p>
                 )}
-
-                {content?.intro?.trim() && (
-                    <div className="mt-10 mb-15 lead fs-lg">
-                        <ProjectRichContent content={content.intro} />
+                {intro && (
+                    <div className="lead fs-lg">
+                        <ProjectRichContent content={intro} />
                     </div>
                 )}
-
                 {bloki.map((blok, index) => {
                     const imageRight = index % 2 === 0;
-                    const shape = (
-                        <div
-                            className="shape bg-dot primary rellax w-16 h-20"
-                            style={{ top: '14rem', left: '-2.5rem', zIndex: -1 }}
-                        />
-                    );
 
                     return (
                         <div
@@ -93,31 +102,21 @@ export default async function OProjekcie() {
                                     imageRight ? ' order-lg-1' : ''
                                 }`}
                             >
-                                <div className="overlap-grid overlap-grid-2">
-                                    {imageRight && shape}
-                                    {blok.imageUrl && (
-                                        <div>
-                                            <figure className="rounded shadow">
-                                                <Image
-                                                    src={blok.imageUrl}
-                                                    width={600}
-                                                    height={1000}
-                                                    alt={blok.title}
-                                                />
-                                            </figure>
-                                        </div>
-                                    )}
-                                    {!imageRight && shape}
-                                </div>
+                                {isSupportedImageUrl(blok.imageUrl) && (
+                                    <figure className="rounded shadow">
+                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                        <img
+                                            src={blok.imageUrl!}
+                                            width={600}
+                                            height={1000}
+                                            alt={blok.title}
+                                        />
+                                    </figure>
+                                )}
                             </div>
-
                             <div className="col-lg-6">
                                 <p className="lead fs-lg">{blok.title}</p>
-                                <div className="row gy-3 gx-xl-8">
-                                    <div className="col-xl-12">
-                                        <ProjectRichContent content={blok.content} />
-                                    </div>
-                                </div>
+                                <ProjectRichContent content={blok.content} />
                             </div>
                         </div>
                     );
