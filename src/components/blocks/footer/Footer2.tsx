@@ -1,9 +1,12 @@
 import Link from "next/link";
+import { getContactContent } from '@/lib/actions/contact';
 
 
 
 
-export default function Footer2() {
+export default async function Footer2() {
+  const content = await getContactContent();
+
   return (
     <footer className="bg-soft-primary">
       <div className="container">
@@ -18,19 +21,36 @@ export default function Footer2() {
             <div className="row mb-3">
 
 
-              <div className="col-md-12">
+              <div className="col-md-4">
                 <div className="widget">
-                  <p className="widget-title fs-15 fw-bold"><i className="uil uil-envelope fs-25 me-2 "></i> e-mail</p>
-                  <Link href="mailto:restartpracy@crse.org.pl" className="link-primary">
-                    restartpracy@crse.org.pl
-                  </Link>
-                  <br className="d-none d-md-block" />
+                  <p className="widget-title fs-15 fw-bold">Biuro projektu</p>
+                  <p className="mb-0 fw-bold">{content.officeTitle}</p>
+                  {content.officeAddress && <p className="mb-0" style={{ whiteSpace: 'pre-line' }}>{content.officeAddress}</p>}
                 </div>
+              </div>
+              <div className="col-md-4">
+                <div className="widget">
+                  <p className="widget-title fs-15 fw-bold">Kontakt</p>
+                  {content.contactPerson && <p className="mb-1">{content.contactPerson}</p>}
+                  {content.phone && <p className="mb-1"><Link href={`tel:${content.phone}`} className="link-primary">{content.phone}</Link></p>}
+                  {content.email && <p className="mb-0"><Link href={`mailto:${content.email}`} className="link-primary">{content.email}</Link></p>}
+                </div>
+              </div>
+              {content.facebookUrl && (
+                <div className="col-md-4">
+                  <div className="widget">
+                    <p className="widget-title fs-15 fw-bold">Facebook</p>
+                    <Link href={content.facebookUrl} className="link-primary" target="_blank" rel="noopener noreferrer">
+                      Odwiedź nasz profil
+                    </Link>
+                  </div>
+                </div>
+              )}
               </div>
             </div>
           </div>
         </div>
-        <p className="fs-15">Centrum Rozwoju Społeczno-Ekonomicznego rights reserved.</p>
+        <p className="fs-15">{content.organizationName} rights reserved.</p>
       </div>
     </footer>
   );

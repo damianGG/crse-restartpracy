@@ -1,9 +1,12 @@
 import type { Metadata } from 'next'
+import { getContactContent } from '@/lib/actions/contact';
 export const metadata: Metadata = {
     title: 'Kontakt do projektu „Kobieta * Aktywność * Sukces',
     description: 'Kontakt do projektu „Kobieta * Aktywność * Sukces”',
 }
-export default function Kontakt() {
+export default async function Kontakt() {
+    const content = await getContactContent();
+
     return (
         <>
             <section
@@ -47,8 +50,12 @@ export default function Kontakt() {
             <div className="container mt-5">
                 <div className="row">
                     <div className="col text-center">
-                        <h1>Biuro Projektu</h1>
-                        <p><strong>E-mail:</strong> <a href="mailto:restartpracy@crse.org.pl" className="link-primary" target="_blank">restartpracy@crse.org.pl</a> </p>
+                        <h1>{content.officeTitle}</h1>
+                        {content.officeAddress && <p style={{ whiteSpace: 'pre-line' }}>{content.officeAddress}</p>}
+                        {content.contactPerson && <p><strong>Kontakt:</strong> {content.contactPerson}</p>}
+                        {content.phone && <p><strong>Telefon:</strong> <a href={`tel:${content.phone}`} className="link-primary">{content.phone}</a></p>}
+                        {content.email && <p><strong>E-mail:</strong> <a href={`mailto:${content.email}`} className="link-primary">{content.email}</a></p>}
+                        {content.facebookUrl && <p><strong>Facebook:</strong> <a href={content.facebookUrl} className="link-primary" target="_blank" rel="noopener noreferrer">Facebook</a></p>}
                     </div>
                 </div>
             </div>

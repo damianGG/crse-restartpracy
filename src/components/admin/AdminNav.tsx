@@ -10,6 +10,7 @@ const links = [
   { href: '/admin/rekrutacja', label: 'Rekrutacja' },
   { href: '/admin/o-projekcie', label: 'O projekcie' },
   { href: '/admin/strona-glowna', label: 'Strona główna' },
+  { href: '/admin/kontakt', label: 'Kontakt i stopka' },
 ];
 
 export default function AdminNav() {
