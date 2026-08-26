@@ -1,4 +1,5 @@
 import { getOProjekcieContent } from '@/lib/actions/o-projekcie';
+import ProjectRichContent from './ProjectRichContent';
 import './style.css';
 
 export const metadata = {
@@ -60,7 +61,11 @@ export default async function OProjekcie() {
                         Wysokość wkładu Funduszy Europejskich: {euContribution}
                     </p>
                 )}
-                {intro && <p className="lead fs-lg">{intro}</p>}
+                {intro && (
+                    <div className="lead fs-lg">
+                        <ProjectRichContent content={intro} />
+                    </div>
+                )}
             </div>
         </>
     );
