@@ -49,7 +49,6 @@ export default async function Footer2() {
               </div>
             </div>
           </div>
-        </div>
         <p className="fs-15">{content.organizationName} rights reserved.</p>
       </div>
     </footer>
