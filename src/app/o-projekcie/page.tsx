@@ -12,6 +12,9 @@ export const dynamic = 'force-dynamic';
 export default async function OProjekcie() {
     const content = await getOProjekcieContent();
     const heroTitle = content?.heroTitle?.trim() || 'O projekcie';
+    const projectValue = content?.projectValue?.trim();
+    const euContribution = content?.euContribution?.trim();
+    const intro = content?.intro?.trim();
 
     return (
         <>
@@ -47,9 +50,17 @@ export default async function OProjekcie() {
             </section>
 
             <div className="container mb-15 mt-15">
-                <p className="lead fs-lg">
-                    Informacje o projekcie będą dostępne wkrótce.
-                </p>
+                {projectValue && (
+                    <p className="mb-3 fw-bold lead fs-lg">
+                        Wartość projektu: {projectValue}
+                    </p>
+                )}
+                {euContribution && (
+                    <p className="mb-3 fw-bold lead fs-lg">
+                        Wysokość wkładu Funduszy Europejskich: {euContribution}
+                    </p>
+                )}
+                {intro && <p className="lead fs-lg">{intro}</p>}
             </div>
         </>
     );
