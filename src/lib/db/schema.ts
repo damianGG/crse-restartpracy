@@ -150,6 +150,20 @@ export const homepageContent = pgTable('homepage_content', {
   updatedAt: timestamp('updatedAt').notNull().defaultNow(),
 });
 
+// Contact page and footer - single editable row
+export const contactContent = pgTable('contact_content', {
+  id: serial('id').primaryKey(),
+  userId: text('userId'),
+  officeTitle: text('officeTitle'),
+  officeAddress: text('officeAddress'),
+  contactPerson: text('contactPerson'),
+  phone: text('phone'),
+  email: text('email'),
+  facebookUrl: text('facebookUrl'),
+  organizationName: text('organizationName'),
+  updatedAt: timestamp('updatedAt').notNull().defaultNow(),
+});
+
 // O projekcie - editable page content
 export const aboutProjectContent = pgTable('about_project_content', {
   id: serial('id').primaryKey(),
