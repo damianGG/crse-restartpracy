@@ -103,15 +103,25 @@ export default async function OProjekcie() {
                                 }`}
                             >
                                 {isSupportedImageUrl(blok.imageUrl) && (
-                                    <figure className="rounded shadow">
-                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        <img
-                                            src={blok.imageUrl!}
-                                            width={600}
-                                            height={1000}
-                                            alt={blok.title}
+                                    <>
+                                        <div
+                                            className="shape bg-dot primary rellax w-17 h-19"
+                                            style={
+                                                imageRight
+                                                    ? { top: '-1.7rem', right: '-1.5rem' }
+                                                    : { top: '-1.7rem', left: '-1.5rem' }
+                                            }
                                         />
-                                    </figure>
+                                        <figure className="rounded shadow">
+                                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                                            <img
+                                                src={blok.imageUrl!}
+                                                width={600}
+                                                height={1000}
+                                                alt={blok.title}
+                                            />
+                                        </figure>
+                                    </>
                                 )}
                             </div>
                             <div className="col-lg-6">
