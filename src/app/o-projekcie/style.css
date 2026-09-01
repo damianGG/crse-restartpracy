@@ -9,6 +9,11 @@
   margin-bottom: 1.1rem;
 }
 
+.projectRichContent ul + p,
+.projectRichContent ol + p {
+  margin-top: 1.75rem;
+}
+
 .projectRichContent li + li {
   margin-top: 0.75rem;
 }
