@@ -11,7 +11,7 @@
 
 .projectRichContent ul + p,
 .projectRichContent ol + p {
-  margin-top: 1.75rem;
+  margin-top: 3.5rem;
 }
 
 .projectRichContent li + li {
