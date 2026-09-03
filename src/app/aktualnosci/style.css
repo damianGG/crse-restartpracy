@@ -6,17 +6,23 @@
 }
 
 .news-card {
-  min-height: 385px;
+  width: 100%;
 }
 
 .card-body {
   flex-grow: 1;
 }
 
-/* Obcinanie do 4 linii dotyczy TYLKO podglądów na liście aktualności. */
+.news-card-link {
+  display: flex;
+  width: 100%;
+}
+
+/* Obcinanie do 10 linii dotyczy TYLKO podglądów na liście aktualności. */
 .news-card .post-content p {
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 10;
+  line-clamp: 10;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;

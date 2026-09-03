@@ -92,6 +92,9 @@ export default async function AdminRekrutacjaPage() {
                       {file.description || file.name}
                     </div>
                     <div className={styles.listItemMeta}>{file.name}</div>
+                    {file.blackWhiteUrl && (
+                      <div className={styles.listItemMeta}>Wersja czarno-biała dodana</div>
+                    )}
                   </div>
                   <div className={styles.listItemActions}>
                     <a
@@ -100,8 +103,18 @@ export default async function AdminRekrutacjaPage() {
                       rel="noreferrer"
                       className={`${styles.btn} ${styles.btnOutline} ${styles.btnSm}`}
                     >
-                      Pobierz
+                      Kolor
                     </a>
+                    {file.blackWhiteUrl && (
+                      <a
+                        href={file.blackWhiteUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={`${styles.btn} ${styles.btnOutline} ${styles.btnSm}`}
+                      >
+                        Czarno-biały
+                      </a>
+                    )}
                     <form action={deleteFile}>
                       <SubmitButton variant="danger" size="sm" pendingText="Usuwanie...">
                         Usuń
@@ -121,8 +134,12 @@ export default async function AdminRekrutacjaPage() {
               <input id="description" name="description" type="text" placeholder="np. Regulamin rekrutacji" />
             </div>
             <div className={styles.field}>
-              <label htmlFor="file">Plik</label>
-              <input id="file" name="file" type="file" required />
+              <label htmlFor="colorFile">Plik kolorowy</label>
+              <input id="colorFile" name="colorFile" type="file" required />
+            </div>
+            <div className={styles.field}>
+              <label htmlFor="blackWhiteFile">Plik czarno-biały</label>
+              <input id="blackWhiteFile" name="blackWhiteFile" type="file" />
             </div>
           </div>
           <div>

@@ -95,7 +95,7 @@ export default async function OProjekcie() {
                     return (
                         <div
                             key={blok.id}
-                            className="row gx-lg-8 gx-xl-12 gy-10 mb-14 mb-md-17 align-items-center"
+                            className="row gx-lg-8 gx-xl-12 gy-10 mb-14 mb-md-17 align-items-start"
                         >
                             <div
                                 className={`col-lg-6 position-relative${
@@ -125,7 +125,7 @@ export default async function OProjekcie() {
                                 )}
                             </div>
                             <div className="col-lg-6">
-                                <p className="lead fs-lg">{blok.title}</p>
+                                <h2 className="h3 fw-bold mb-4">{blok.title}</h2>
                                 <ProjectRichContent content={blok.content} />
                             </div>
                         </div>

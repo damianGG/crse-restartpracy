@@ -9,47 +9,40 @@ export default async function Footer2() {
 
   return (
     <footer className="bg-soft-primary">
-      <div className="container">
-        {/* <div className="card shadow-lg mt-n16 mt-md-n21 mb-15 mb-md-14">
-          <ContactMap />
-        </div> */}
-      </div>
-
-      <div className="container pb-12 text-center pt-10">
-        <div className="row mt-n10 mt-lg-0">
-          <div className="col-xl-10 mx-auto">
-            <div className="row mb-3">
-
-
-              <div className="col-md-4">
-                <div className="widget">
-                  <p className="widget-title fs-15 fw-bold">Biuro projektu</p>
-                  <p className="mb-0 fw-bold">{content.officeTitle}</p>
-                  {content.officeAddress && <p className="mb-0" style={{ whiteSpace: 'pre-line' }}>{content.officeAddress}</p>}
-                </div>
-              </div>
-              <div className="col-md-4">
-                <div className="widget">
-                  <p className="widget-title fs-15 fw-bold">Kontakt</p>
-                  {content.contactPerson && <p className="mb-1">{content.contactPerson}</p>}
-                  {content.phone && <p className="mb-1"><Link href={`tel:${content.phone}`} className="link-primary">{content.phone}</Link></p>}
-                  {content.email && <p className="mb-0"><Link href={`mailto:${content.email}`} className="link-primary">{content.email}</Link></p>}
-                </div>
-              </div>
-              {content.facebookUrl && (
-                <div className="col-md-4">
-                  <div className="widget">
-                    <p className="widget-title fs-15 fw-bold">Facebook</p>
-                    <Link href={content.facebookUrl} className="link-primary" target="_blank" rel="noopener noreferrer">
-                      Odwiedź nasz profil
-                    </Link>
-                  </div>
-                </div>
-              )}
+      <div className="container py-10 py-md-12">
+        <div className="row gy-8 text-center text-md-start">
+          <div className="col-md-6 col-lg-3">
+            <div className="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-3">
+              <i className="uil uil-location-pin-alt fs-36 text-primary" />
+              <div>
+                <p className="widget-title fw-bold mb-2">Biuro projektu</p>
+                <p className="mb-0 fw-bold">{content.officeTitle}</p>
+                {content.officeAddress && <p className="mb-0" style={{ whiteSpace: 'pre-line' }}>{content.officeAddress}</p>}
               </div>
             </div>
           </div>
-        <p className="fs-15">{content.organizationName} rights reserved.</p>
+          <div className="col-md-6 col-lg-3">
+            <i className="uil uil-phone fs-36 text-primary" />
+            <p className="widget-title fw-bold mb-2">Telefon</p>
+            {content.phone && <Link href={`tel:${content.phone}`} className="link-primary">{content.phone}</Link>}
+          </div>
+          <div className="col-md-6 col-lg-3">
+            <i className="uil uil-envelope fs-36 text-primary" />
+            <p className="widget-title fw-bold mb-2">E-mail</p>
+            {content.email && <Link href={`mailto:${content.email}`} className="link-primary">{content.email}</Link>}
+          </div>
+          <div className="col-md-6 col-lg-3">
+            <i className="uil uil-facebook fs-36 text-primary" />
+            <p className="widget-title fw-bold mb-2">Facebook</p>
+            {content.facebookUrl && (
+              <Link href={content.facebookUrl} className="link-primary" target="_blank" rel="noopener noreferrer">
+                Odwiedź nasz profil
+              </Link>
+            )}
+          </div>
+        </div>
+        <hr className="my-7" />
+        <p className="fs-15 text-center mb-0">© {new Date().getFullYear()} {content.organizationName}. Wszelkie prawa zastrzeżone.</p>
       </div>
     </footer>
   );
