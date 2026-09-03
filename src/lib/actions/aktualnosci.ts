@@ -21,7 +21,7 @@ export async function getPublishedAktualnosci() {
     .orderBy(desc(aktualnosci.createdAt));
 }
 
-function hasPostgresCode(error: unknown, code: string) {
+function hasPostgresCode(error: unknown, code: string): boolean {
   if (typeof error !== 'object' || error === null) return false;
 
   if ('code' in error && error.code === code) return true;
