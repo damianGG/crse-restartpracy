@@ -21,8 +21,39 @@ async function ensureRekrutacjaFileVariants() {
 }
 
 export async function getRekrutacjaPliki() {
-  await ensureRekrutacjaFileVariants();
-  return db.select().from(rekrutacjaPliki).orderBy(asc(rekrutacjaPliki.position));
+  try {
+    return await db.select().from(rekrutacjaPliki).orderBy(asc(rekrutacjaPliki.position));
+  } catch (error) {
+    const cause = typeof error === 'object' && error !== null && 'cause' in error
+      ? error.cause
+      : error;
+    const isMissingColumn = typeof cause === 'object'
+      && cause !== null
+      && 'code' in cause
+      && cause.code === '42703';
+
+    if (!isMissingColumn) throw error;
+
+    const legacyFiles = await db
+      .select({
+        id: rekrutacjaPliki.id,
+        userId: rekrutacjaPliki.userId,
+        name: rekrutacjaPliki.name,
+        description: rekrutacjaPliki.description,
+        url: rekrutacjaPliki.url,
+        pathname: rekrutacjaPliki.pathname,
+        position: rekrutacjaPliki.position,
+        createdAt: rekrutacjaPliki.createdAt,
+      })
+      .from(rekrutacjaPliki)
+      .orderBy(asc(rekrutacjaPliki.position));
+
+    return legacyFiles.map((file) => ({
+      ...file,
+      blackWhiteUrl: null,
+      blackWhitePathname: null,
+    }));
+  }
 }
 
 export async function updateRekrutacjaContent(formData: FormData) {
@@ -49,6 +80,7 @@ export async function updateRekrutacjaContent(formData: FormData) {
 
 export async function addRekrutacjaFile(formData: FormData) {
   const userId = await getUserId();
+  await ensureRekrutacjaFileVariants();
 
   const file = formData.get('colorFile') as File | null;
   const blackWhiteFile = formData.get('blackWhiteFile') as File | null;
@@ -96,6 +128,7 @@ export async function addRekrutacjaFile(formData: FormData) {
 
 export async function deleteRekrutacjaFile(fileId: number) {
   await getUserId();
+  await ensureRekrutacjaFileVariants();
 
   const [file] = await db
     .select()

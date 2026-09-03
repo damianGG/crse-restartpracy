@@ -233,10 +233,7 @@ export async function updateAktualnosc(id: number, formData: FormData) {
 export async function deleteAktualnosc(id: number) {
   await getUserId();
 
-  const files = await db
-    .select()
-    .from(aktualnosciPliki)
-    .where(eq(aktualnosciPliki.aktualnoscId, id));
+  const files = await getAktualnoscFiles(id);
 
   const [item] = await db
     .select()
