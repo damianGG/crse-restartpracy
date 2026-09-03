@@ -110,6 +110,8 @@ export const rekrutacjaPliki = pgTable('rekrutacja_pliki', {
   description: text('description'),
   url: text('url').notNull(),
   pathname: text('pathname').notNull(),
+  blackWhiteUrl: text('blackWhiteUrl'),
+  blackWhitePathname: text('blackWhitePathname'),
   position: integer('position').notNull().default(0),
   createdAt: timestamp('createdAt').notNull().defaultNow(),
 });

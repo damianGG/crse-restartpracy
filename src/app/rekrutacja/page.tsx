@@ -56,12 +56,29 @@ export default async function Rekrutacja() {
               {files.length > 0 && (
                 <div className="mt-10">
                   <h2 className="h3 mb-5 text-center">Dokumenty do pobrania</h2>
+                  <div className="d-flex flex-wrap justify-content-center gap-4 mb-6">
+                    <span className="d-flex align-items-center gap-2">
+                      <span className="btn btn-circle btn-sm btn-soft-primary pe-none">
+                        <i className="uil uil-file-download" />
+                      </span>
+                      wersja kolorowa
+                    </span>
+                    <span className="d-flex align-items-center gap-2">
+                      <span className="btn btn-circle btn-sm btn-white text-dark border pe-none">
+                        <i className="uil uil-file-download" />
+                      </span>
+                      wersja czarno-biała
+                    </span>
+                  </div>
                   <div className="d-flex flex-column gap-3">
                     {files.map((file) => (
                       <DownloadElement
                         key={file.id}
                         title={file.description || file.name}
                         link1={file.url}
+                        link2={file.blackWhiteUrl}
+                        link1Label={`Pobierz wersję kolorową: ${file.description || file.name}`}
+                        link2Label={`Pobierz wersję czarno-białą: ${file.description || file.name}`}
                       />
                     ))}
                   </div>

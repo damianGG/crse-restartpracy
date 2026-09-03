@@ -28,3 +28,9 @@
 .projectRichContent strong {
   font-weight: 700;
 }
+
+.projectRichContent h2,
+.projectRichContent h3,
+.projectRichContent h4 {
+  font-weight: 700;
+}

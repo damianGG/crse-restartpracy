@@ -53,11 +53,11 @@ export default async function News() {
         </div>
       </section>
       <div className="container mb-15 mt-15">
-        <div className="row gx-0 gx-md-3 gx-xl-8 gy-8 align-items-center">
+        <div className="row gx-0 gx-md-3 gx-xl-8 gy-8 align-items-stretch">
           {items.length > 0 ? (
             items.map((article) => (
-              <div className="col-md-4" key={article.id}>
-                <Link href={`/aktualnosci/${article.slug}`}>
+              <div className="col-md-4 d-flex" key={article.id}>
+                <Link href={`/aktualnosci/${article.slug}`} className="news-card-link">
                   <div className="card news-card">
                     {article.coverImageUrl && (
                       <img

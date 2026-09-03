@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { eq, desc } from 'drizzle-orm';
+import { eq, desc, sql } from 'drizzle-orm';
 import { put, del } from '@vercel/blob';
 import { db } from '@/lib/db';
 import { aktualnosci, aktualnosciPliki } from '@/lib/db/schema';
@@ -21,6 +21,39 @@ export async function getPublishedAktualnosci() {
     .orderBy(desc(aktualnosci.createdAt));
 }
 
+function hasPostgresCode(error: unknown, code: string): boolean {
+  if (typeof error !== 'object' || error === null) return false;
+
+  if ('code' in error && error.code === code) return true;
+  return 'cause' in error && hasPostgresCode(error.cause, code);
+}
+
+async function getAktualnoscFiles(aktualnoscId: number) {
+  try {
+    return await db
+      .select()
+      .from(aktualnosciPliki)
+      .where(eq(aktualnosciPliki.aktualnoscId, aktualnoscId));
+  } catch (error) {
+    if (hasPostgresCode(error, '42P01')) return [];
+    throw error;
+  }
+}
+
+async function ensureAktualnosciPlikiTable() {
+  await db.execute(sql`
+    CREATE TABLE IF NOT EXISTS aktualnosci_pliki (
+      id serial PRIMARY KEY,
+      "userId" text NOT NULL,
+      "aktualnoscId" integer NOT NULL REFERENCES aktualnosci(id) ON DELETE CASCADE,
+      name text NOT NULL,
+      url text NOT NULL,
+      pathname text NOT NULL,
+      "createdAt" timestamp NOT NULL DEFAULT now()
+    )
+  `);
+}
+
 export async function getAktualnoscBySlug(slug: string) {
   const [item] = await db
     .select()
@@ -30,10 +63,7 @@ export async function getAktualnoscBySlug(slug: string) {
 
   if (!item) return null;
 
-  const files = await db
-    .select()
-    .from(aktualnosciPliki)
-    .where(eq(aktualnosciPliki.aktualnoscId, item.id));
+  const files = await getAktualnoscFiles(item.id);
 
   return { ...item, files };
 }
@@ -47,10 +77,7 @@ export async function getAktualnoscById(id: number) {
 
   if (!item) return null;
 
-  const files = await db
-    .select()
-    .from(aktualnosciPliki)
-    .where(eq(aktualnosciPliki.aktualnoscId, item.id));
+  const files = await getAktualnoscFiles(item.id);
 
   return { ...item, files };
 }
@@ -206,10 +233,7 @@ export async function updateAktualnosc(id: number, formData: FormData) {
 export async function deleteAktualnosc(id: number) {
   await getUserId();
 
-  const files = await db
-    .select()
-    .from(aktualnosciPliki)
-    .where(eq(aktualnosciPliki.aktualnoscId, id));
+  const files = await getAktualnoscFiles(id);
 
   const [item] = await db
     .select()
@@ -234,6 +258,7 @@ export async function deleteAktualnosc(id: number) {
 
 export async function addAktualnoscFile(aktualnoscId: number, formData: FormData) {
   const userId = await getUserId();
+  await ensureAktualnosciPlikiTable();
 
   const file = formData.get('file') as File | null;
   if (!file || file.size === 0) {

@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import { getContactContent } from '@/lib/actions/contact';
+import ContactMap from '@/components/blocks/maps/ContactMap';
 export const metadata: Metadata = {
-    title: 'Kontakt do projektu „Kobieta * Aktywność * Sukces',
-    description: 'Kontakt do projektu „Kobieta * Aktywność * Sukces”',
+    title: 'Kontakt - Restart Pracy',
+    description: 'Dane kontaktowe biura projektu Restart Pracy',
 }
 export default async function Kontakt() {
     const content = await getContactContent();
@@ -45,18 +46,21 @@ export default async function Kontakt() {
                 </div>
             </section>
 
-            <title>Biuro Projektu</title>
-
-            <div className="container mt-5">
-                <div className="row">
-                    <div className="col text-center">
-                        <h1>{content.officeTitle}</h1>
+            <div className="container py-10 py-md-14">
+                <div className="row gy-8 align-items-center">
+                    <div className="col-lg-5">
+                        <h2 className="h1 mb-4">{content.officeTitle}</h2>
                         {content.officeAddress && <p style={{ whiteSpace: 'pre-line' }}>{content.officeAddress}</p>}
                         {content.contactPerson && <p><strong>Kontakt:</strong> {content.contactPerson}</p>}
                         {content.phone && <p><strong>Telefon:</strong> <a href={`tel:${content.phone}`} className="link-primary">{content.phone}</a></p>}
                         {content.email && <p><strong>E-mail:</strong> <a href={`mailto:${content.email}`} className="link-primary">{content.email}</a></p>}
                         {content.facebookUrl && <p><strong>Facebook:</strong> <a href={content.facebookUrl} className="link-primary" target="_blank" rel="noopener noreferrer">Facebook</a></p>}
                     </div>
+                    {content.officeAddress && (
+                        <div className="col-lg-7">
+                            <ContactMap address={content.officeAddress} />
+                        </div>
+                    )}
                 </div>
             </div>
         </>
