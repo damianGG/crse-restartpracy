@@ -16,6 +16,14 @@ const nextConfig = {
             },
             {
                 protocol: 'https',
+                hostname: 'restartpracy.pl',
+            },
+            {
+                protocol: 'https',
+                hostname: 'www.restartpracy.pl',
+            },
+            {
+                protocol: 'https',
                 hostname: 'jpmcg.up.railway.app',
             },
             {
