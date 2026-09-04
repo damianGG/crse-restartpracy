@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation';
 import { format } from 'date-fns';
 import { pl } from 'date-fns/locale';
-import FigureImage from '@/components/reuseable/FigureImage';
 import DownloadElement from '@/components/reuseable/process-list/DownloadElement';
 import ArticleContent from './ArticleContent';
 import { getAktualnoscBySlug } from '@/lib/actions/aktualnosci';
@@ -50,14 +49,6 @@ export default async function BlogDetailsTemplate({
             <div className="col-lg-10 mx-auto">
               <div className="blog single mt-n17">
                 <div className="card">
-                  {article.coverImageUrl && (
-                    <FigureImage
-                      width={960}
-                      height={600}
-                      src={article.coverImageUrl}
-                      className="card-img-top"
-                    />
-                  )}
                   {article.files.length > 0 && (
                     <div className="d-flex flex-column align-items-center mt-10 gap-3">
                       {article.files.map((file) => (
