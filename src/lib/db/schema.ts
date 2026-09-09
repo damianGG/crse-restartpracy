@@ -99,6 +99,17 @@ export const rekrutacjaContent = pgTable('rekrutacja_content', {
   title: text('title'),
   intro: text('intro'),
   content: text('content'),
+  eligibilityTitle: text('eligibilityTitle'),
+  eligibilityItems: text('eligibilityItems'),
+  priorityContent: text('priorityContent'),
+  equalOpportunities: text('equalOpportunities'),
+  applicationTitle: text('applicationTitle'),
+  applicationIntro: text('applicationIntro'),
+  applicationSteps: text('applicationSteps'),
+  applicationHelp: text('applicationHelp'),
+  documentsTitle: text('documentsTitle'),
+  documentsIntro: text('documentsIntro'),
+  documentsFooter: text('documentsFooter'),
   updatedAt: timestamp('updatedAt').notNull().defaultNow(),
 });
 

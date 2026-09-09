@@ -7,7 +7,25 @@ import { db } from '@/lib/db';
 import { rekrutacjaContent, rekrutacjaPliki } from '@/lib/db/schema';
 import { getUserId } from '@/lib/get-user-id';
 
+async function ensureRekrutacjaContentFields() {
+  await db.execute(sql`
+    ALTER TABLE IF EXISTS rekrutacja_content
+      ADD COLUMN IF NOT EXISTS "eligibilityTitle" text,
+      ADD COLUMN IF NOT EXISTS "eligibilityItems" text,
+      ADD COLUMN IF NOT EXISTS "priorityContent" text,
+      ADD COLUMN IF NOT EXISTS "equalOpportunities" text,
+      ADD COLUMN IF NOT EXISTS "applicationTitle" text,
+      ADD COLUMN IF NOT EXISTS "applicationIntro" text,
+      ADD COLUMN IF NOT EXISTS "applicationSteps" text,
+      ADD COLUMN IF NOT EXISTS "applicationHelp" text,
+      ADD COLUMN IF NOT EXISTS "documentsTitle" text,
+      ADD COLUMN IF NOT EXISTS "documentsIntro" text,
+      ADD COLUMN IF NOT EXISTS "documentsFooter" text
+  `);
+}
+
 export async function getRekrutacjaContent() {
+  await ensureRekrutacjaContentFields();
   const [content] = await db.select().from(rekrutacjaContent).limit(1);
   return content ?? null;
 }
@@ -59,19 +77,33 @@ export async function getRekrutacjaPliki() {
 export async function updateRekrutacjaContent(formData: FormData) {
   const userId = await getUserId();
 
-  const title = String(formData.get('title') ?? '').trim();
-  const intro = String(formData.get('intro') ?? '').trim();
-  const content = String(formData.get('content') ?? '').trim();
+  const getText = (name: string) => String(formData.get(name) ?? '').trim();
+  const values = {
+    title: getText('title'),
+    intro: getText('intro'),
+    content: getText('content'),
+    eligibilityTitle: getText('eligibilityTitle'),
+    eligibilityItems: getText('eligibilityItems'),
+    priorityContent: getText('priorityContent'),
+    equalOpportunities: getText('equalOpportunities'),
+    applicationTitle: getText('applicationTitle'),
+    applicationIntro: getText('applicationIntro'),
+    applicationSteps: getText('applicationSteps'),
+    applicationHelp: getText('applicationHelp'),
+    documentsTitle: getText('documentsTitle'),
+    documentsIntro: getText('documentsIntro'),
+    documentsFooter: getText('documentsFooter'),
+  };
 
   const existing = await getRekrutacjaContent();
 
   if (existing) {
     await db
       .update(rekrutacjaContent)
-      .set({ title, intro, content, userId, updatedAt: new Date() })
+      .set({ ...values, userId, updatedAt: new Date() })
       .where(eq(rekrutacjaContent.id, existing.id));
   } else {
-    await db.insert(rekrutacjaContent).values({ userId, title, intro, content });
+    await db.insert(rekrutacjaContent).values({ userId, ...values });
   }
 
   revalidatePath('/rekrutacja');
