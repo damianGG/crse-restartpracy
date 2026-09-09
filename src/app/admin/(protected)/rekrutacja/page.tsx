@@ -56,7 +56,7 @@ export default async function AdminRekrutacjaPage() {
           </div>
 
           <div className={styles.field}>
-            <label htmlFor="content">Treść</label>
+            <label htmlFor="content">Treść wprowadzająca</label>
             <textarea
               id="content"
               name="content"
@@ -66,6 +66,118 @@ export default async function AdminRekrutacjaPage() {
             <span className={styles.helpText}>
               Nową linię odstępu użyj, aby rozdzielić akapity.
             </span>
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="eligibilityTitle">Nagłówek sekcji „Kto może wziąć udział”</label>
+            <input
+              id="eligibilityTitle"
+              name="eligibilityTitle"
+              type="text"
+              defaultValue={content?.eligibilityTitle ?? ''}
+            />
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="eligibilityItems">Kryteria udziału</label>
+            <textarea
+              id="eligibilityItems"
+              name="eligibilityItems"
+              rows={8}
+              defaultValue={content?.eligibilityItems ?? ''}
+            />
+            <span className={styles.helpText}>Wpisz każde kryterium w osobnym wierszu.</span>
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="priorityContent">Informacja o pierwszeństwie udziału</label>
+            <textarea
+              id="priorityContent"
+              name="priorityContent"
+              rows={5}
+              defaultValue={content?.priorityContent ?? ''}
+            />
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="equalOpportunities">Informacja o równych szansach</label>
+            <textarea
+              id="equalOpportunities"
+              name="equalOpportunities"
+              rows={5}
+              defaultValue={content?.equalOpportunities ?? ''}
+            />
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="applicationTitle">Nagłówek sekcji zgłoszenia</label>
+            <input
+              id="applicationTitle"
+              name="applicationTitle"
+              type="text"
+              defaultValue={content?.applicationTitle ?? ''}
+            />
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="applicationIntro">Wprowadzenie do zgłoszenia</label>
+            <textarea
+              id="applicationIntro"
+              name="applicationIntro"
+              rows={5}
+              defaultValue={content?.applicationIntro ?? ''}
+            />
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="applicationSteps">Kroki zgłoszenia</label>
+            <textarea
+              id="applicationSteps"
+              name="applicationSteps"
+              rows={8}
+              defaultValue={content?.applicationSteps ?? ''}
+            />
+            <span className={styles.helpText}>Wpisz każdy krok w osobnym wierszu.</span>
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="applicationHelp">Dodatkowa pomoc przy zgłoszeniu</label>
+            <textarea
+              id="applicationHelp"
+              name="applicationHelp"
+              rows={5}
+              defaultValue={content?.applicationHelp ?? ''}
+            />
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="documentsTitle">Nagłówek sekcji dokumentów</label>
+            <input
+              id="documentsTitle"
+              name="documentsTitle"
+              type="text"
+              defaultValue={content?.documentsTitle ?? ''}
+            />
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="documentsIntro">Wprowadzenie do dokumentów</label>
+            <textarea
+              id="documentsIntro"
+              name="documentsIntro"
+              rows={5}
+              defaultValue={content?.documentsIntro ?? ''}
+            />
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="documentsFooter">Informacja pod dokumentami</label>
+            <textarea
+              id="documentsFooter"
+              name="documentsFooter"
+              rows={5}
+              defaultValue={content?.documentsFooter ?? ''}
+            />
           </div>
 
           <div>
