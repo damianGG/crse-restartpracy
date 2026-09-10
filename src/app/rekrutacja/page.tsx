@@ -37,6 +37,48 @@ function LineList({ value, ordered = false }: { value: string; ordered?: boolean
   );
 }
 
+function ApplicationSteps({ value }: { value: string }) {
+  const steps = value.split('\n').map((item) => item.trim()).filter(Boolean);
+
+  return (
+    <div className="col-lg-12 order-lg-2">
+      {steps.map((step, index) => (
+        <div key={`${index}-${step}`}>
+          <div className="card shadow-lg mt-10">
+            <div className="card-body p-6">
+              <div className="d-flex flex-row align-items-center">
+                <div className="flex-shrink-0">
+                  <span className="icon btn btn-circle btn-lg btn-soft-primary pe-none me-4">
+                    <span className="number">{index + 1}</span>
+                  </span>
+                </div>
+                <h4 className="mb-1 text-start">{step}</h4>
+              </div>
+            </div>
+          </div>
+
+          {index < steps.length - 1 && (
+            <div className="text-center mt-4" aria-hidden="true">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="48"
+                height="48"
+                fill="currentColor"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1"
+                />
+              </svg>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default async function Rekrutacja() {
   const [content, files] = await Promise.all([
     getRekrutacjaContent(),
@@ -102,20 +144,29 @@ export default async function Rekrutacja() {
                 </div>
               )}
 
-              {content?.applicationTitle && (
-                <h2 className="h3 mb-4">{content.applicationTitle}</h2>
-              )}
-              {content?.applicationIntro && (
-                <div className="mb-4">
-                  <TextContent value={content.applicationIntro} />
-                </div>
-              )}
-              {content?.applicationSteps && (
-                <LineList value={content.applicationSteps} ordered />
-              )}
-              {content?.applicationHelp && (
-                <div className="mb-8">
-                  <TextContent value={content.applicationHelp} />
+              {(content?.applicationTitle ||
+                content?.applicationIntro ||
+                content?.applicationSteps ||
+                content?.applicationHelp) && (
+                <div className="row mt-10 mb-5">
+                  <div className="col-md-10 col-xl-8 col-xxl-7 mx-auto text-center">
+                    {content?.applicationTitle && (
+                      <h2 className="display-4 mb-4 px-lg-14">{content.applicationTitle}</h2>
+                    )}
+                    {content?.applicationIntro && (
+                      <div>
+                        <TextContent value={content.applicationIntro} />
+                      </div>
+                    )}
+                    {content?.applicationSteps && (
+                      <ApplicationSteps value={content.applicationSteps} />
+                    )}
+                    {content?.applicationHelp && (
+                      <div className="mt-5">
+                        <TextContent value={content.applicationHelp} />
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
 
@@ -123,32 +174,41 @@ export default async function Rekrutacja() {
                 content?.documentsTitle ||
                 content?.documentsIntro ||
                 content?.documentsFooter) && (
-                <div className="mt-10">
-                  <h2 className="h3 mb-4 text-center">
-                    {content?.documentsTitle || 'Dokumenty do pobrania'}
-                  </h2>
-                  {content?.documentsIntro && (
-                    <div className="mb-5 text-center">
-                      <TextContent value={content.documentsIntro} />
-                    </div>
-                  )}
-                  {files.length > 0 && (
-                    <>
-                      <div className="d-flex flex-wrap justify-content-center gap-4 mb-6">
-                        <span className="d-flex align-items-center gap-2">
-                          <span className="btn btn-circle btn-sm btn-soft-primary pe-none">
-                            <i className="uil uil-file-download" />
+                <div className="row mt-10 mb-5">
+                  <div className="col-md-10 col-xl-8 col-xxl-7 mx-auto text-center">
+                    <h2 className="display-4 mb-10 px-lg-14">
+                      {content?.documentsTitle || 'DOKUMENTY REKRUTACYJNE:'}
+                    </h2>
+                    {files.length > 0 && (
+                      <div className="d-flex flex-column align-items-start">
+                        <p className="d-flex align-items-center text-start">
+                          <span className="icon btn btn-circle btn-lg btn-soft-primary pe-none me-4">
+                            <span className="number">
+                              <i className="uil uil-file-download fs-40" />
+                            </span>
                           </span>
-                          wersja kolorowa
-                        </span>
-                        <span className="d-flex align-items-center gap-2">
-                          <span className="btn btn-circle btn-sm btn-white text-dark border pe-none">
-                            <i className="uil uil-file-download" />
+                          - pobrania pliku w wersji kolorowej
+                        </p>
+                        <p className="d-flex align-items-center text-start">
+                          <span
+                            className="icon btn btn-circle btn-lg btn-soft-primary pe-none me-4"
+                            style={{ backgroundColor: 'white' }}
+                          >
+                            <span className="number" style={{ color: 'black' }}>
+                              <i className="uil uil-file-download fs-40" />
+                            </span>
                           </span>
-                          wersja czarno-biała
-                        </span>
+                          - pobrania pliku w wersji czarno-białej
+                        </p>
                       </div>
-                      <div className="d-flex flex-column gap-3">
+                    )}
+                    {content?.documentsIntro && (
+                      <div>
+                        <TextContent value={content.documentsIntro} />
+                      </div>
+                    )}
+                    {files.length > 0 && (
+                      <div className="col-lg-12 order-lg-2">
                         {files.map((file) => (
                           <DownloadElement
                             key={file.id}
@@ -157,16 +217,17 @@ export default async function Rekrutacja() {
                             link2={file.blackWhiteUrl}
                             link1Label={`Pobierz wersję kolorową: ${file.description || file.name}`}
                             link2Label={`Pobierz wersję czarno-białą: ${file.description || file.name}`}
+                            className="mb-5"
                           />
                         ))}
                       </div>
-                    </>
-                  )}
-                  {content?.documentsFooter && (
-                    <div className="mt-6">
-                      <TextContent value={content.documentsFooter} />
-                    </div>
-                  )}
+                    )}
+                    {content?.documentsFooter && (
+                      <div className="mt-5">
+                        <TextContent value={content.documentsFooter} />
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
