@@ -37,6 +37,29 @@ function LineList({ value, ordered = false }: { value: string; ordered?: boolean
   );
 }
 
+function EligibilityCards({ value }: { value: string }) {
+  const items = value.split('\n').map((item) => item.trim()).filter(Boolean);
+
+  return (
+    <div className="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-6 mb-6">
+      {items.map((item, index) => (
+        <div className="col" key={`${index}-${item}`}>
+          <div className="card shadow-lg h-100">
+            <div className="card-body p-6">
+              <div className="d-flex align-items-start">
+                <span className="icon btn btn-circle btn-lg btn-soft-primary pe-none me-4 flex-shrink-0">
+                  <span className="number">{index + 1}</span>
+                </span>
+                <p className="mb-0 fw-semibold">{item}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function ApplicationSteps({ value }: { value: string }) {
   const steps = value.split('\n').map((item) => item.trim()).filter(Boolean);
 
@@ -127,11 +150,21 @@ export default async function Rekrutacja() {
                 </p>
               ) : null}
 
-              {content?.eligibilityTitle && (
-                <h2 className="h3 mb-4">{content.eligibilityTitle}</h2>
-              )}
-              {content?.eligibilityItems && (
-                <LineList value={content.eligibilityItems} />
+              {(content?.eligibilityTitle || content?.eligibilityItems) && (
+                <div className="mt-10 mb-8">
+                  {content?.eligibilityTitle && (
+                    <div className="row">
+                      <div className="col-md-10 col-xl-8 mx-auto text-center">
+                        <h2 className="display-4 mb-10 px-lg-10">
+                          {content.eligibilityTitle}
+                        </h2>
+                      </div>
+                    </div>
+                  )}
+                  {content?.eligibilityItems && (
+                    <EligibilityCards value={content.eligibilityItems} />
+                  )}
+                </div>
               )}
               {content?.priorityContent && (
                 <div className="mb-6">
