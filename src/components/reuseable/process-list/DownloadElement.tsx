@@ -43,8 +43,13 @@ export default function DownloadElement({
                             </Link>
                             {link2 && (
                                 <Link href={link2} aria-label={link2Label || `Pobierz ${title}`}>
-                                    <span className="icon btn btn-circle btn-lg btn-white text-dark border pe-none">
-                                        <span className="number"><i className="uil uil-file-download fs-40"></i></span>
+                                    <span
+                                        className="icon btn btn-circle btn-lg btn-soft-primary pe-none"
+                                        style={{ backgroundColor: "white" }}
+                                    >
+                                        <span className="number" style={{ color: "black" }}>
+                                            <i className="uil uil-file-download fs-40"></i>
+                                        </span>
                                     </span>
                                 </Link>
                             )}
