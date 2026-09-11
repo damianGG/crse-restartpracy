@@ -1,48 +1,48 @@
 import Link from "next/link";
 import { getContactContent } from '@/lib/actions/contact';
 
-
-
-
 export default async function Footer2() {
   const content = await getContactContent();
 
   return (
     <footer className="bg-soft-primary">
-      <div className="container py-10 py-md-12">
-        <div className="row gy-8 text-center text-md-start">
-          <div className="col-md-6 col-lg-3">
-            <div className="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-3">
-              <i className="uil uil-location-pin-alt fs-36 text-primary" />
-              <div>
-                <p className="widget-title fw-bold mb-2">Biuro projektu</p>
-                <p className="mb-0 fw-bold">{content.officeTitle}</p>
-                {content.officeAddress && <p className="mb-0" style={{ whiteSpace: 'pre-line' }}>{content.officeAddress}</p>}
+      <div className="container pb-12 text-center pt-10">
+        <div className="row mt-n10 mt-lg-0">
+          <div className="col-xl-10 mx-auto">
+            <div className="row mb-3 gy-6">
+              <div className="col-md-3">
+                <div className="widget">
+                  <p className="widget-title fs-15 fw-bold"><i className="uil uil-map me-2 fs-25" /> Adres (Biuro projektu)</p>
+                  {content.officeAddress && <address style={{ whiteSpace: 'pre-line' }}>{content.officeAddress}</address>}
+                </div>
+              </div>
+              <div className="col-md-3">
+                <div className="widget">
+                  <p className="widget-title fs-15 fw-bold"><i className="uil uil-phone-alt me-2 fs-25" />Telefon</p>
+                  {content.phone && <Link href={`tel:${content.phone}`} className="link-primary">{content.phone}</Link>}
+                </div>
+              </div>
+              <div className="col-md-3">
+                <div className="widget">
+                  <p className="widget-title fs-15 fw-bold"><i className="uil uil-envelope fs-25 me-2" /> e-mail</p>
+                  {content.email && <Link href={`mailto:${content.email}`} className="link-primary">{content.email}</Link>}
+                </div>
+              </div>
+              <div className="col-md-3">
+                <div className="widget">
+                  <p className="widget-title fs-15 fw-bold"><i className="uil uil-facebook-f fs-25" /> facebook</p>
+                  {content.facebookUrl && (
+                    <Link href={content.facebookUrl} className="link-primary" target="_blank" rel="noopener noreferrer">
+                      {content.facebookLabel || content.organizationName}
+                    </Link>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-          <div className="col-md-6 col-lg-3">
-            <i className="uil uil-phone fs-36 text-primary" />
-            <p className="widget-title fw-bold mb-2">Telefon</p>
-            {content.phone && <Link href={`tel:${content.phone}`} className="link-primary">{content.phone}</Link>}
-          </div>
-          <div className="col-md-6 col-lg-3">
-            <i className="uil uil-envelope fs-36 text-primary" />
-            <p className="widget-title fw-bold mb-2">E-mail</p>
-            {content.email && <Link href={`mailto:${content.email}`} className="link-primary">{content.email}</Link>}
-          </div>
-          <div className="col-md-6 col-lg-3">
-            <i className="uil uil-facebook fs-36 text-primary" />
-            <p className="widget-title fw-bold mb-2">Facebook</p>
-            {content.facebookUrl && (
-              <Link href={content.facebookUrl} className="link-primary" target="_blank" rel="noopener noreferrer">
-                Odwiedź nasz profil
-              </Link>
-            )}
+            {content.officeHours && <p>{content.officeHours}</p>}
           </div>
         </div>
-        <hr className="my-7" />
-        <p className="fs-15 text-center mb-0">© {new Date().getFullYear()} {content.organizationName}. Wszelkie prawa zastrzeżone.</p>
+        {content.footerText && <p className="fs-15">{content.footerText}</p>}
       </div>
     </footer>
   );

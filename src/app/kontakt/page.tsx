@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
+import Image from 'next/image';
+import Link from 'next/link';
 import { getContactContent } from '@/lib/actions/contact';
-import ContactMap from '@/components/blocks/maps/ContactMap';
 export const metadata: Metadata = {
     title: 'Kontakt - Restart Pracy',
     description: 'Dane kontaktowe biura projektu Restart Pracy',
@@ -46,22 +47,40 @@ export default async function Kontakt() {
                 </div>
             </section>
 
-            <div className="container py-10 py-md-14">
-                <div className="row gy-8 align-items-center">
-                    <div className="col-lg-5">
-                        <h2 className="h1 mb-4">{content.officeTitle}</h2>
-                        {content.officeAddress && <p style={{ whiteSpace: 'pre-line' }}>{content.officeAddress}</p>}
-                        {content.contactPerson && <p><strong>Kontakt:</strong> {content.contactPerson}</p>}
-                        {content.phone && <p><strong>Telefon:</strong> <a href={`tel:${content.phone}`} className="link-primary">{content.phone}</a></p>}
+            <div className="container pt-5 pb-15">
+                <div className="row">
+                    <div className="col text-center">
+                        <h2>{content.officeTitle}</h2>
+                        {content.officeAddress && <p><strong>Adres:</strong> <span style={{ whiteSpace: 'pre-line' }}>{content.officeAddress}</span></p>}
+                        {content.officeHours && <p>{content.officeHours}</p>}
+                        {content.phone && <p><strong>Tel:</strong> <a href={`tel:${content.phone}`} className="link-primary">{content.phone}</a></p>}
                         {content.email && <p><strong>E-mail:</strong> <a href={`mailto:${content.email}`} className="link-primary">{content.email}</a></p>}
-                        {content.facebookUrl && <p><strong>Facebook:</strong> <a href={content.facebookUrl} className="link-primary" target="_blank" rel="noopener noreferrer">Facebook</a></p>}
                     </div>
-                    {content.officeAddress && (
-                        <div className="col-lg-7">
-                            <ContactMap address={content.officeAddress} />
-                        </div>
-                    )}
                 </div>
+                <div className="row mt-10">
+                    <div className="col text-center">
+                        <Image src="/img/logos/crselogo.png" alt={content.organizationName} width={65} height={65} />
+                        <h2>{content.organizationTitle}</h2>
+                        {content.organizationAddress && <p><strong>Adres: </strong><span style={{ whiteSpace: 'pre-line' }}>{content.organizationAddress}</span></p>}
+                        {content.organizationWebsiteUrl && content.organizationWebsiteLabel && (
+                            <p><strong>Strona: </strong><Link href={content.organizationWebsiteUrl} className="link-primary" target="_blank" rel="noopener noreferrer">{content.organizationWebsiteLabel}</Link></p>
+                        )}
+                        {content.organizationFacebookUrl && content.organizationFacebookLabel && (
+                            <p><strong>Facebook: </strong><Link href={content.organizationFacebookUrl} className="link-primary" target="_blank" rel="noopener noreferrer">{content.organizationFacebookLabel}</Link></p>
+                        )}
+                        {content.organizationPhone && <p><strong>Tel: </strong><a href={`tel:${content.organizationPhone}`} className="link-primary">{content.organizationPhone}</a></p>}
+                        {content.organizationEmail && <p><strong>E-mail: </strong><a href={`mailto:${content.organizationEmail}`} className="link-primary">{content.organizationEmail}</a></p>}
+                    </div>
+                </div>
+                {content.hashtags && (
+                    <div className="row">
+                        <div className="col text-center">
+                            {content.hashtagsUrl ? (
+                                <Link href={content.hashtagsUrl} className="link-primary" target="_blank" rel="noopener noreferrer">{content.hashtags}</Link>
+                            ) : content.hashtags}
+                        </div>
+                    </div>
+                )}
             </div>
         </>
     );
