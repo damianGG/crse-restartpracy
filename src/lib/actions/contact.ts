@@ -75,7 +75,7 @@ export async function getContactContent() {
   return {
     ...DEFAULT_CONTACT_CONTENT,
     ...Object.fromEntries(
-      Object.entries(content ?? {}).filter(([, value]) => typeof value === 'string' && value),
+      Object.entries(content ?? {}).filter(([, value]) => typeof value === 'string'),
     ),
   };
 }
