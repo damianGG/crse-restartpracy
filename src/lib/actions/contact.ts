@@ -11,7 +11,7 @@ function getText(formData: FormData, name: string) {
   return String(formData.get(name) ?? '').trim();
 }
 
-function getFacebookUrl(value: string) {
+function getUrl(value: string) {
   if (!value) return '';
 
   try {
@@ -22,18 +22,6 @@ function getFacebookUrl(value: string) {
   }
 }
 
-function isMissingContactTableError(error: unknown) {
-  return (
-    typeof error === 'object' &&
-    error !== null &&
-    'cause' in error &&
-    typeof error.cause === 'object' &&
-    error.cause !== null &&
-    'code' in error.cause &&
-    error.cause.code === '42P01'
-  );
-}
-
 async function ensureContactContentTable() {
   await db.execute(sql`
     CREATE TABLE IF NOT EXISTS contact_content (
@@ -41,29 +29,53 @@ async function ensureContactContentTable() {
       "userId" text,
       "officeTitle" text,
       "officeAddress" text,
+      "officeHours" text,
       "contactPerson" text,
       phone text,
       email text,
       "facebookUrl" text,
+      "facebookLabel" text,
       "organizationName" text,
+      "organizationTitle" text,
+      "organizationAddress" text,
+      "organizationWebsiteUrl" text,
+      "organizationWebsiteLabel" text,
+      "organizationFacebookUrl" text,
+      "organizationFacebookLabel" text,
+      "organizationPhone" text,
+      "organizationEmail" text,
+      hashtags text,
+      "hashtagsUrl" text,
+      "footerText" text,
       "updatedAt" timestamp NOT NULL DEFAULT now()
     )
+  `);
+  await db.execute(sql`
+    ALTER TABLE contact_content
+      ADD COLUMN IF NOT EXISTS "officeHours" text,
+      ADD COLUMN IF NOT EXISTS "facebookLabel" text,
+      ADD COLUMN IF NOT EXISTS "organizationTitle" text,
+      ADD COLUMN IF NOT EXISTS "organizationAddress" text,
+      ADD COLUMN IF NOT EXISTS "organizationWebsiteUrl" text,
+      ADD COLUMN IF NOT EXISTS "organizationWebsiteLabel" text,
+      ADD COLUMN IF NOT EXISTS "organizationFacebookUrl" text,
+      ADD COLUMN IF NOT EXISTS "organizationFacebookLabel" text,
+      ADD COLUMN IF NOT EXISTS "organizationPhone" text,
+      ADD COLUMN IF NOT EXISTS "organizationEmail" text,
+      ADD COLUMN IF NOT EXISTS hashtags text,
+      ADD COLUMN IF NOT EXISTS "hashtagsUrl" text,
+      ADD COLUMN IF NOT EXISTS "footerText" text
   `);
 }
 
 export async function getContactContent() {
-  let content;
-
-  try {
-    [content] = await db.select().from(contactContent).limit(1);
-  } catch (error) {
-    if (!isMissingContactTableError(error)) throw error;
-  }
+  await ensureContactContentTable();
+  const [content] = await db.select().from(contactContent).limit(1);
 
   return {
     ...DEFAULT_CONTACT_CONTENT,
     ...Object.fromEntries(
-      Object.entries(content ?? {}).filter(([, value]) => typeof value === 'string' && value),
+      Object.entries(content ?? {}).filter(([, value]) => typeof value === 'string'),
     ),
   };
 }
@@ -74,11 +86,24 @@ export async function updateContactContent(formData: FormData) {
   const values = {
     officeTitle: getText(formData, 'officeTitle'),
     officeAddress: getText(formData, 'officeAddress'),
+    officeHours: getText(formData, 'officeHours'),
     contactPerson: getText(formData, 'contactPerson'),
     phone: getText(formData, 'phone'),
     email: getText(formData, 'email'),
-    facebookUrl: getFacebookUrl(getText(formData, 'facebookUrl')),
+    facebookUrl: getUrl(getText(formData, 'facebookUrl')),
+    facebookLabel: getText(formData, 'facebookLabel'),
     organizationName: getText(formData, 'organizationName'),
+    organizationTitle: getText(formData, 'organizationTitle'),
+    organizationAddress: getText(formData, 'organizationAddress'),
+    organizationWebsiteUrl: getUrl(getText(formData, 'organizationWebsiteUrl')),
+    organizationWebsiteLabel: getText(formData, 'organizationWebsiteLabel'),
+    organizationFacebookUrl: getUrl(getText(formData, 'organizationFacebookUrl')),
+    organizationFacebookLabel: getText(formData, 'organizationFacebookLabel'),
+    organizationPhone: getText(formData, 'organizationPhone'),
+    organizationEmail: getText(formData, 'organizationEmail'),
+    hashtags: getText(formData, 'hashtags'),
+    hashtagsUrl: getUrl(getText(formData, 'hashtagsUrl')),
+    footerText: getText(formData, 'footerText'),
   };
 
   const [existing] = await db.select().from(contactContent).limit(1);
