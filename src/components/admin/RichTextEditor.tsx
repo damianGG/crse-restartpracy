@@ -98,6 +98,26 @@ export default function RichTextEditor({ name, defaultValue = '' }: Props) {
         >
           1. Lista
         </button>
+        <button
+          type="button"
+          className={styles.rteButton}
+          onClick={() => editor.chain().focus().sinkListItem('listItem').run()}
+          disabled={!editor.can().chain().focus().sinkListItem('listItem').run()}
+          aria-label="Zwiększ poziom listy"
+          title="Zwiększ poziom listy"
+        >
+          ↳
+        </button>
+        <button
+          type="button"
+          className={styles.rteButton}
+          onClick={() => editor.chain().focus().liftListItem('listItem').run()}
+          disabled={!editor.can().chain().focus().liftListItem('listItem').run()}
+          aria-label="Zmniejsz poziom listy"
+          title="Zmniejsz poziom listy"
+        >
+          ↰
+        </button>
         <span className={styles.rteDivider} aria-hidden="true" />
         <button
           type="button"

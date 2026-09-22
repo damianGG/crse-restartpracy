@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getContactContent } from '@/lib/actions/contact';
 
 export default async function Footer2() {
@@ -42,7 +43,14 @@ export default async function Footer2() {
             {content.officeHours && <p>{content.officeHours}</p>}
           </div>
         </div>
-        {content.footerText && <p className="fs-15">{content.footerText}</p>}
+        <div className="d-flex flex-wrap justify-content-center align-items-center gap-4">
+          <div className="d-flex align-items-center gap-3">
+            <Image src="/img/logos/feds.jpg" alt="Fundusze Europejskie" width={180} height={19} />
+            <Image src="/img/logos/podkarpackie.jpg" alt="Podkarpackie" width={180} height={15} />
+          </div>
+          {content.organizationName && <p className="fs-15 mb-0">{content.organizationName}</p>}
+        </div>
+        {content.footerText && <p className="fs-15 mt-3 mb-0">{content.footerText}</p>}
       </div>
     </footer>
   );

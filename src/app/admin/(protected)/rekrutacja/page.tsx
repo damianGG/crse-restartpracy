@@ -6,6 +6,7 @@ import {
   deleteRekrutacjaFile,
 } from '@/lib/actions/rekrutacja';
 import SubmitButton from '@/components/admin/SubmitButton';
+import RichTextEditor from '@/components/admin/RichTextEditor';
 import styles from '@/components/admin/admin.module.scss';
 
 export const metadata = {
@@ -86,27 +87,19 @@ export default async function AdminRekrutacjaPage() {
               rows={8}
               defaultValue={content?.eligibilityItems ?? ''}
             />
-            <span className={styles.helpText}>Wpisz każde kryterium w osobnym wierszu.</span>
+            <span className={styles.helpText}>
+              Wpisz każde kryterium w osobnym wierszu. Podpunkty poprzedź spacjami i myślnikiem.
+            </span>
           </div>
 
           <div className={styles.field}>
             <label htmlFor="priorityContent">Informacja o pierwszeństwie udziału</label>
-            <textarea
-              id="priorityContent"
-              name="priorityContent"
-              rows={5}
-              defaultValue={content?.priorityContent ?? ''}
-            />
+            <RichTextEditor name="priorityContent" defaultValue={content?.priorityContent ?? ''} />
           </div>
 
           <div className={styles.field}>
             <label htmlFor="equalOpportunities">Informacja o równych szansach</label>
-            <textarea
-              id="equalOpportunities"
-              name="equalOpportunities"
-              rows={5}
-              defaultValue={content?.equalOpportunities ?? ''}
-            />
+            <RichTextEditor name="equalOpportunities" defaultValue={content?.equalOpportunities ?? ''} />
           </div>
 
           <div className={styles.field}>
