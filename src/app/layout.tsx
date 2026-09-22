@@ -14,7 +14,7 @@ import PopupForm from "@/components/blocks/form/popupform";
 const manrope = Manrope({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Restart Pracy - Podkarpackie Centrum Wsparcia OPT",
+  title: "Restart Pracy",
   description: "Restart Pracy - Podkarpackie Centrum Wsparcia OPT",
 };
 
