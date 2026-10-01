@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { createElement, Fragment, type ReactNode } from 'react';
 import DownloadElement from '@/components/reuseable/process-list/DownloadElement';
 import { getRekrutacjaContent, getRekrutacjaPliki } from '@/lib/actions/rekrutacja';
 
@@ -9,7 +10,70 @@ export const metadata: Metadata = {
 
 export const dynamic = 'force-dynamic';
 
+const allowedTags = new Set([
+  'p', 'br', 'strong', 'em', 'b', 'i', 'u', 's',
+  'ul', 'ol', 'li', 'h2', 'h3', 'h4', 'blockquote', 'a',
+]);
+
+const tagPattern = /<\/?([a-z0-9]+)([^>]*)>/gi;
+
+function getLinkProps(attributes: string) {
+  const href = attributes.match(/\bhref\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/i);
+  if (!href) return {};
+
+  const value = href[1] ?? href[2] ?? href[3];
+  if (!/^(https?:|mailto:|\/(?!\/)|#)/i.test(value)) return {};
+
+  const target = attributes.match(/\btarget\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/i);
+  return target?.[1] === '_blank' || target?.[2] === '_blank' || target?.[3] === '_blank'
+    ? { href: value, target: '_blank', rel: 'noopener noreferrer' }
+    : { href: value };
+}
+
+function parseNodes(content: string, from = 0, closingTag?: string): [ReactNode[], number] {
+  const nodes: ReactNode[] = [];
+  let cursor = from;
+  let key = 0;
+  tagPattern.lastIndex = from;
+
+  while (true) {
+    const match = tagPattern.exec(content);
+    if (!match) {
+      if (cursor < content.length) nodes.push(content.slice(cursor));
+      return [nodes, content.length];
+    }
+
+    if (match.index > cursor) nodes.push(content.slice(cursor, match.index));
+    cursor = tagPattern.lastIndex;
+
+    const [, rawTag, attributes] = match;
+    const tag = rawTag.toLowerCase();
+    const closing = match[0].startsWith('</');
+
+    if (closing && tag === closingTag) return [nodes, cursor];
+    if (!allowedTags.has(tag) || closing) {
+      nodes.push(match[0]);
+      continue;
+    }
+
+    if (tag === 'br') {
+      nodes.push(createElement('br', { key: key++ }));
+      continue;
+    }
+
+    const [children, next] = parseNodes(content, cursor, tag);
+    cursor = next;
+    tagPattern.lastIndex = next;
+    nodes.push(createElement(tag, tag === 'a' ? { key: key++, ...getLinkProps(attributes) } : { key: key++ }, children));
+  }
+}
+
 function TextContent({ value }: { value: string }) {
+  if (/<\/?(p|br|strong|em|b|i|ul|ol|li|h[1-6]|blockquote)\b/i.test(value)) {
+    const [nodes] = parseNodes(value);
+    return <>{nodes.map((node, index) => <Fragment key={index}>{node}</Fragment>)}</>;
+  }
+
   return (
     <>
       {value.split(/\n{2,}/).map((paragraph, index) => (
@@ -38,10 +102,20 @@ function LineList({ value, ordered = false }: { value: string; ordered?: boolean
 }
 
 function EligibilityCards({ value }: { value: string }) {
-  const items = value.split('\n').map((item) => item.trim()).filter(Boolean);
+  const items = value.split('\n').reduce<string[]>((cards, line) => {
+    if (!line.trim()) return cards;
+
+    if (/^\s+[-*]\s+/.test(line) && cards.length > 0) {
+      cards[cards.length - 1] += `\n${line.trim()}`;
+    } else {
+      cards.push(line.trim());
+    }
+
+    return cards;
+  }, []);
 
   return (
-    <div className="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-6 mb-6">
+    <div className="row row-cols-1 row-cols-md-2 row-cols-xl-3 justify-content-center g-6 mb-6">
       {items.map((item, index) => (
         <div className="col" key={`${index}-${item}`}>
           <div className="card shadow-lg h-100">
@@ -50,7 +124,16 @@ function EligibilityCards({ value }: { value: string }) {
                 <span className="icon btn btn-circle btn-lg btn-soft-primary pe-none me-4 flex-shrink-0">
                   <span className="number">{index + 1}</span>
                 </span>
-                <p className="mb-0 fw-semibold">{item}</p>
+                <div className="mb-0 fw-semibold">
+                  <p className="mb-2">{item.split('\n')[0]}</p>
+                  {item.includes('\n') && (
+                    <ul className="mb-0">
+                      {item.split('\n').slice(1).map((bullet, bulletIndex) => (
+                        <li key={bulletIndex}>{bullet.replace(/^[-*]\s+/, '')}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -182,12 +265,12 @@ export default async function Rekrutacja() {
                 content?.applicationSteps ||
                 content?.applicationHelp) && (
                 <div className="row mt-10 mb-5">
-                  <div className="col-md-10 col-xl-8 col-xxl-7 mx-auto text-center">
+                  <div className="col-lg-10 mx-auto text-start">
                     {content?.applicationTitle && (
-                      <h2 className="display-4 mb-4 px-lg-14">{content.applicationTitle}</h2>
+                      <h2 className="display-4 mb-4 text-center">{content.applicationTitle}</h2>
                     )}
                     {content?.applicationIntro && (
-                      <div>
+                      <div className="text-start">
                         <TextContent value={content.applicationIntro} />
                       </div>
                     )}
@@ -195,7 +278,7 @@ export default async function Rekrutacja() {
                       <ApplicationSteps value={content.applicationSteps} />
                     )}
                     {content?.applicationHelp && (
-                      <div className="mt-5">
+                      <div className="mt-5 text-start">
                         <TextContent value={content.applicationHelp} />
                       </div>
                     )}
