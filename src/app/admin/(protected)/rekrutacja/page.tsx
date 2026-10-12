@@ -88,7 +88,8 @@ export default async function AdminRekrutacjaPage() {
               defaultValue={content?.eligibilityItems ?? ''}
             />
             <span className={styles.helpText}>
-              Wpisz każde kryterium w osobnym wierszu. Podpunkty poprzedź spacjami i myślnikiem.
+              Wpisz każde kryterium w osobnym wierszu. Podpunkty poprzedź spacjami i myślnikiem;
+              kolejne poziomy wcięciem większym niż poziom nadrzędny.
             </span>
           </div>
 

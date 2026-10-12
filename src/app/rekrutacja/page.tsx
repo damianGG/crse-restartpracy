@@ -102,22 +102,51 @@ function LineList({ value, ordered = false }: { value: string; ordered?: boolean
 }
 
 function EligibilityCards({ value }: { value: string }) {
-  const items = value.split('\n').reduce<string[]>((cards, line) => {
-    if (!line.trim()) return cards;
+  type EligibilityItem = {
+    text: string;
+    children: EligibilityItem[];
+  };
 
-    if (/^\s+[-*]\s+/.test(line) && cards.length > 0) {
-      cards[cards.length - 1] += `\n${line.trim()}`;
-    } else {
-      cards.push(line.trim());
+  const items: EligibilityItem[] = [];
+  const stack: Array<{ level: number; item: EligibilityItem }> = [];
+
+  value.split('\n').forEach((line) => {
+    const match = line.match(/^(\s*)[-*]\s+(.+)$/);
+    const text = (match?.[2] ?? line).trim();
+    if (!text) return;
+
+    const level = match ? match[1].replace(/\t/g, '  ').length + 1 : 0;
+    const item = { text, children: [] };
+
+    while (stack.length > 0 && stack[stack.length - 1].level >= level) {
+      stack.pop();
     }
 
-    return cards;
-  }, []);
+    const parent = stack[stack.length - 1]?.item;
+    if (parent) {
+      parent.children.push(item);
+    } else {
+      items.push(item);
+    }
+
+    stack.push({ level, item });
+  });
+
+  const renderSubitems = (subitems: EligibilityItem[]) => (
+    <ul className="mb-0">
+      {subitems.map((subitem, index) => (
+        <li key={`${index}-${subitem.text}`}>
+          {subitem.text}
+          {subitem.children.length > 0 && renderSubitems(subitem.children)}
+        </li>
+      ))}
+    </ul>
+  );
 
   return (
     <div className="row row-cols-1 row-cols-md-2 row-cols-xl-3 justify-content-center g-6 mb-6">
       {items.map((item, index) => (
-        <div className="col" key={`${index}-${item}`}>
+        <div className="col" key={`${index}-${item.text}`}>
           <div className="card shadow-lg h-100">
             <div className="card-body p-6">
               <div className="d-flex align-items-start">
@@ -125,14 +154,8 @@ function EligibilityCards({ value }: { value: string }) {
                   <span className="number">{index + 1}</span>
                 </span>
                 <div className="mb-0 fw-semibold">
-                  <p className="mb-2">{item.split('\n')[0]}</p>
-                  {item.includes('\n') && (
-                    <ul className="mb-0">
-                      {item.split('\n').slice(1).map((bullet, bulletIndex) => (
-                        <li key={bulletIndex}>{bullet.replace(/^[-*]\s+/, '')}</li>
-                      ))}
-                    </ul>
-                  )}
+                  <p className="mb-2">{item.text}</p>
+                  {item.children.length > 0 && renderSubitems(item.children)}
                 </div>
               </div>
             </div>
