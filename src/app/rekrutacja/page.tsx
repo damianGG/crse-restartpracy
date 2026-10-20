@@ -288,7 +288,7 @@ export default async function Rekrutacja() {
                 content?.applicationSteps ||
                 content?.applicationHelp) && (
                 <div className="row mt-10 mb-5">
-                  <div className="col-lg-10 mx-auto text-start">
+                  <div className="col-lg-12 mx-auto text-start">
                     {content?.applicationTitle && (
                       <h2 className="display-4 mb-4 text-center">{content.applicationTitle}</h2>
                     )}
