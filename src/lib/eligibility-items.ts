@@ -7,7 +7,7 @@ export function parseEligibilityItems(value: string): EligibilityItem[] {
   const items: EligibilityItem[] = [];
   const stack: Array<{ level: number; item: EligibilityItem }> = [];
 
-  value.split('\n').forEach((line) => {
+  value.split(/\r\n?|\n/).forEach((line) => {
     const match = line.match(/^(\s*)[-*•]\s+(.+)$/);
     const text = (match?.[2] ?? line).trim();
     if (!text) return;
