@@ -20,6 +20,24 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
+## Kafelki kryteriow rekrutacji
+
+W `/admin/rekrutacja`, w sekcji **Kryteria udzialu**, kazdy kafelek ma osobne
+pole tresci oraz opcjonalne pole **Wypunktowanie**. Kazdy niepusty wiersz
+wypunktowania tworzy punkt listy wewnatrz tego samego kafelka na `/rekrutacja`.
+Nie trzeba wpisywac myslnikow; wklejone znaczniki list sa rowniez obslugiwane.
+Wciecia spacjami pozwalaja tworzyc zagniezdzone podpunkty.
+
+Przyciski **Dodaj kafelek** i **Usun kafelek** zmieniaja liczbe kafelkow.
+Zmiany nalezy zatwierdzic przyciskiem **Zapisz tresc**. Dotychczasowe kafelki
+i zagniezdzone listy pozostaja obslugiwane bez migracji danych.
+
+Testy formatu zapisu i odczytu (Node.js 22.18 lub nowszy):
+
+```bash
+node --test src/lib/eligibility-items.test.cjs
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

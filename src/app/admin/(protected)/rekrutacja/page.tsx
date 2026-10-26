@@ -7,6 +7,7 @@ import {
 } from '@/lib/actions/rekrutacja';
 import SubmitButton from '@/components/admin/SubmitButton';
 import RichTextEditor from '@/components/admin/RichTextEditor';
+import EligibilityCardsEditor from '@/components/admin/EligibilityCardsEditor';
 import styles from '@/components/admin/admin.module.scss';
 
 export const metadata = {
@@ -80,17 +81,8 @@ export default async function AdminRekrutacjaPage() {
           </div>
 
           <div className={styles.field}>
-            <label htmlFor="eligibilityItems">Kryteria udziału</label>
-            <textarea
-              id="eligibilityItems"
-              name="eligibilityItems"
-              rows={8}
-              defaultValue={content?.eligibilityItems ?? ''}
-            />
-            <span className={styles.helpText}>
-              Wpisz każde kryterium w osobnym wierszu. Podpunkty poprzedź spacjami i myślnikiem;
-              kolejne poziomy wcięciem większym niż poziom nadrzędny.
-            </span>
+            <h2 className={styles.cardTitle}>Kryteria udziału</h2>
+            <EligibilityCardsEditor defaultValue={content?.eligibilityItems ?? ''} />
           </div>
 
           <div className={styles.field}>
