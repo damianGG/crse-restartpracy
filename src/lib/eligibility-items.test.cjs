@@ -41,6 +41,51 @@ test('legacy cards and nested points survive opening and saving the editor', () 
   ]);
 });
 
+test('stored criteria with CRLF line endings render as two cards, not five', () => {
+  const value = [
+    'Osoby spelniajace kryteria:',
+    '- powyzej 18 roku zycia',
+    '- wpisujacy sie w definicje ubogo pracujacych',
+    '- mieszkajacych na obszarze woj. swietokrzyskiego',
+    'Pracodawcy/zwiazki zawodowe',
+  ].join('\r\n');
+  const items = parseEligibilityItems(value);
+
+  assert.deepEqual(items, [
+    {
+      text: 'Osoby spelniajace kryteria:',
+      children: [
+        { text: 'powyzej 18 roku zycia', children: [] },
+        { text: 'wpisujacy sie w definicje ubogo pracujacych', children: [] },
+        { text: 'mieszkajacych na obszarze woj. swietokrzyskiego', children: [] },
+      ],
+    },
+    { text: 'Pracodawcy/zwiazki zawodowe', children: [] },
+  ]);
+
+  const saved = serializeEligibilityCards(items.map((item) => ({
+    text: item.text,
+    points: formatEligibilityPoints(item.children),
+  })));
+  assert.deepEqual(parseEligibilityItems(saved.replace(/\n/g, '\r\n')), items);
+});
+
+test('form submission line endings preserve nested points and blank lines', () => {
+  const saved = serializeEligibilityCards([
+    { text: 'Osoby', points: 'Dorosli\n  Pracujacy\n    Mieszkancy\nPozostali' },
+    { text: 'Pracodawcy', points: '' },
+  ]);
+  const expected = parseEligibilityItems(saved);
+
+  for (const newline of ['\r\n', '\r', '\n']) {
+    assert.deepEqual(parseEligibilityItems(saved.replace(/\n/g, newline)), expected);
+  }
+  assert.deepEqual(parseEligibilityItems('Osoby\r\n\r\n- Dorosli\r\n\r\nPracodawcy\r\n'), [
+    { text: 'Osoby', children: [{ text: 'Dorosli', children: [] }] },
+    { text: 'Pracodawcy', children: [] },
+  ]);
+});
+
 test('pasted bullet markers, blank lines, tabs and Windows line endings are supported', () => {
   const saved = serializeEligibilityCards([
     { text: 'Osoby', points: '- Dorosli\r\n\t* Pracujacy\r\n\r\n\u2022 Pozostali' },

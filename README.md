@@ -31,6 +31,8 @@ Wciecia spacjami pozwalaja tworzyc zagniezdzone podpunkty.
 Przyciski **Dodaj kafelek** i **Usun kafelek** zmieniaja liczbe kafelkow.
 Zmiany nalezy zatwierdzic przyciskiem **Zapisz tresc**. Dotychczasowe kafelki
 i zagniezdzone listy pozostaja obslugiwane bez migracji danych.
+Odczyt obsluguje konce wierszy LF i CRLF (takze przesylane przez formularz),
+wiec zapisane wczesniej wiersze z myslnikami pozostaja punktami w jednym kafelku.
 
 Testy formatu zapisu i odczytu (Node.js 22.18 lub nowszy):
 
