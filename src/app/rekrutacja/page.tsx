@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { createElement, Fragment, type ReactNode } from 'react';
 import DownloadElement from '@/components/reuseable/process-list/DownloadElement';
 import { getRekrutacjaContent, getRekrutacjaPliki } from '@/lib/actions/rekrutacja';
+import { parseEligibilityItems, type EligibilityItem } from '@/lib/eligibility-items';
 
 export const metadata: Metadata = {
   title: 'Rekrutacja - Restart Pracy',
@@ -102,35 +103,7 @@ function LineList({ value, ordered = false }: { value: string; ordered?: boolean
 }
 
 function EligibilityCards({ value }: { value: string }) {
-  type EligibilityItem = {
-    text: string;
-    children: EligibilityItem[];
-  };
-
-  const items: EligibilityItem[] = [];
-  const stack: Array<{ level: number; item: EligibilityItem }> = [];
-
-  value.split('\n').forEach((line) => {
-    const match = line.match(/^(\s*)[-*]\s+(.+)$/);
-    const text = (match?.[2] ?? line).trim();
-    if (!text) return;
-
-    const level = match ? match[1].replace(/\t/g, '  ').length + 1 : 0;
-    const item = { text, children: [] };
-
-    while (stack.length > 0 && stack[stack.length - 1].level >= level) {
-      stack.pop();
-    }
-
-    const parent = stack[stack.length - 1]?.item;
-    if (parent) {
-      parent.children.push(item);
-    } else {
-      items.push(item);
-    }
-
-    stack.push({ level, item });
-  });
+  const items = parseEligibilityItems(value);
 
   const renderSubitems = (subitems: EligibilityItem[]) => (
     <ul className="mb-0">
